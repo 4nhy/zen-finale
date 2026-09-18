@@ -57,8 +57,8 @@ const PRINCIPLES = [
 const STATS = [
   { n: "4", l: "Products shipped." },
   { n: "5", l: "Disciplines. One team." },
-  { n: "< 1 day", l: "Reply time." },
-  { n: "4 to 10 wks", l: "Build window." },
+  { n: "24 hours", l: "Reply time." },
+  { n: "14 to 40 days", l: "Build window." },
 ];
 
 export function AboutSection() {
