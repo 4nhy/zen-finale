@@ -1,30 +1,12 @@
 {
-  "name": "ai-website-clone-template",
-  "version": "0.4.0",
+  "name": "zen-consulting-site",
+  "version": "1.0.0",
   "private": true,
-  "description": "Clone any website into a clean, modern Next.js codebase using AI coding agents",
-  "author": "JCodesMore",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template.git"
-  },
-  "homepage": "https://github.com/JCodesMore/ai-website-cloner-template",
-  "bugs": {
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template/issues"
-  },
-  "keywords": [
-    "claude-code",
-    "website-clone",
-    "reverse-engineering",
-    "nextjs",
-    "ai",
-    "template",
-    "tailwindcss",
-    "shadcn-ui"
-  ],
+  "description": "Marketing + portfolio site for Zen Consulting. Next.js 16 App Router. Bakes in the Zen demo SPA under /public/zen-app/ so all 14 software demos and 6 static websites deploy standalone.",
+  "author": "Zen Consulting",
+  "license": "UNLICENSED",
   "engines": {
-    "node": ">=24"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev",
