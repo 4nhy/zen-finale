@@ -275,21 +275,22 @@ export function AboutSection() {
             {STATS.map((s) => (
               <div
                 key={s.l}
-                className="px-6 py-8 text-center"
+                className="px-4 py-8 flex flex-col items-center justify-center gap-2 text-center min-h-[8rem]"
                 style={{ background: "var(--mono-card-bg)" }}
               >
                 <div
-                  className="tracking-tight tabular-nums"
+                  className="tracking-tight tabular-nums whitespace-nowrap"
                   style={{
-                    fontSize: "clamp(1.75rem, 2.5vw, 2.25rem)",
+                    fontSize: "clamp(1.25rem, 2vw, 1.875rem)",
                     fontWeight: 700,
+                    lineHeight: 1.1,
                     color: "var(--mono-beige-100)",
                   }}
                 >
                   {s.n}
                 </div>
                 <div
-                  className="text-sm mt-2 leading-snug"
+                  className="text-sm leading-snug"
                   style={{ color: "var(--mono-black-50)" }}
                 >
                   {s.l}
