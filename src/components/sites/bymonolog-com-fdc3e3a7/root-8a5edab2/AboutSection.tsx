@@ -24,7 +24,7 @@ const TEAM = [
     name: "Anthony",
     role: "Founder · fullstack",
     focus:
-      "Runs the trading platform build. Product, infrastructure, execution. First point of contact.",
+      "Brings ideas into execution by leading the team, shaping project direction, and working across both the backend and frontend.",
     github: "https://github.com/4nhy",
   },
   {
@@ -32,7 +32,7 @@ const TEAM = [
     name: "Dhvani",
     role: "Co-founder · backend & security",
     focus:
-      "Backend and security. Built the exoplanet classifier. Built the pentesting agent. ML, agents, automation.",
+      "Builds the systems behind every product while keeping security at the forefront, ensuring every layer is designed to withstand threat.",
     github: "https://github.com/dhvqn1",
   },
   {
@@ -40,7 +40,7 @@ const TEAM = [
     name: "Swara",
     role: "Frontend & design",
     focus:
-      "Frontend, interaction, visual design. Owns the design system. Owns every screen you touch.",
+      "Shapes the frontend of every product, turning user needs into intuitive, polished experiences designed around how people actually use them.",
     github: "https://github.com/swara4747",
   },
 ];
