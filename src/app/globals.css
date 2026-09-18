@@ -1,0 +1,232 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Proprietary fonts served by Webflow's CDN — referenced by URL only,
+   no font binaries are stored in this repo. Do not deploy publicly. */
+@font-face {
+  font-family: "Khteka";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.prod.website-files.com/68b652bbd6c64a44c8fe3e5e/6968b3919a24a99e002f91dc_KHTeka-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Khteka";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.prod.website-files.com/68b652bbd6c64a44c8fe3e5e/6aa0c3bf16eda4f4f4a2d77f_KHTeka-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Suisse Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.prod.website-files.com/68b652bbd6c64a44c8fe3e5e/69c69d75a0cda52c270e65bf_SuisseIntlMono-Regular-WebXL.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Animo";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.prod.website-files.com/68b652bbd6c64a44c8fe3e5e/68b65b9ff7f95f04c5db6845_Animo-Normal_Regular.woff2") format("woff2");
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Khteka", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Suisse Mono", ui-monospace, "Menlo", monospace;
+  --font-display: "Animo", "Khteka", ui-serif, Georgia, serif;
+  --font-heading: var(--font-sans);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  /* Monolog palette */
+  --mono-beige-100: #e8e8e3;
+  --mono-beige-100-2: #fafaf9;
+  --mono-beige-200: #ddddd5;
+  --mono-beige-300: #d1d1c7;
+  --mono-beige-400: #bfbfb1;
+  --mono-beige-600: #8c8c73;
+  --mono-black-50: #938f8a;
+  --mono-black-100: #6b645c;
+  --mono-black-200: #524d47;
+  --mono-black-300: #393632;
+  --mono-black-400: #080807;
+  --mono-card-bg: #181715;
+
+  /* Monolog theme (dark-first, matches the live site) */
+  --background: var(--mono-black-400);
+  --foreground: var(--mono-beige-100);
+  --card: var(--mono-card-bg);
+  --card-foreground: var(--mono-beige-100);
+  --border: var(--mono-black-200);
+  --muted: var(--mono-black-300);
+  --muted-foreground: var(--mono-black-50);
+  --primary: var(--mono-beige-400);
+  --primary-foreground: var(--mono-beige-100);
+
+  /* Grid & spacing (Webflow-style fluid clamps) */
+  --site-column-count: 12;
+  --site-gutter: 1rem;
+  --site-viewport-min: 20;
+  --site-viewport-max: 100;
+  --site-margin: clamp(0.75rem, 0.6rem + 1vw, 1.75rem);
+  --max-width-main: calc(var(--site-viewport-max) * 1rem);
+
+  /* Fluid type */
+  --font-size-display: clamp(5rem, 4.15rem + 4.25vw, 9.25rem);
+  --font-size-display-small: clamp(4rem, 3.2rem + 4vw, 8rem);
+  --font-size-h1: clamp(5rem, 4.8rem + 1vw, 6rem);
+  --font-size-h2: clamp(3rem, 2.65rem + 1.75vw, 4.75rem);
+  --font-size-h3: clamp(2rem, 1.7rem + 1.5vw, 3.5rem);
+  --font-size-h4: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+  --font-size-text-main: clamp(1rem, 0.975rem + 0.125vw, 1.125rem);
+  --font-size-text-small: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
+  --font-size-text-xsmall: clamp(0.65rem, 0.63rem + 0.1vw, 0.75rem);
+
+  --lh-tight: 0.9;
+  --lh-snug: 1.1;
+  --lh-normal: 1.3;
+  --lh-relaxed: 1.5;
+
+  --radius: 1rem;
+  --radius-small: 0.15rem;
+  --radius-medium: 0.35rem;
+  --radius-round: 100vw;
+
+  /* Easings */
+  --ease-primary: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-secondary: cubic-bezier(0.31, 0.75, 0.22, 1);
+  --ease-expo-out: cubic-bezier(0.2, 1, 0.36, 1);
+  --duration-fast: 0.45s;
+}
+
+.mono-light {
+  --background: var(--mono-beige-300);
+  --foreground: var(--mono-black-400);
+  --card: var(--mono-beige-200);
+  --card-foreground: var(--mono-black-400);
+  --border: var(--mono-black-200);
+  --muted-foreground: var(--mono-black-100);
+}
+
+@layer base {
+  html {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: "Khteka", "Inter", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: inherit;
+    font-weight: 500;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Khteka", "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: var(--lh-snug);
+  }
+  ::selection {
+    background: var(--mono-beige-300);
+    color: var(--mono-black-400);
+  }
+}
+
+/* Lenis smooth scroll base — required for Lenis to work with modern browsers */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Global slim scrollbars (from Zen): thin rounded low-contrast thumb on a
+   transparent track. The 3px transparent border + content-box clip give the
+   thumb visual padding so it reads as a ~4px pill. */
+/* Auto-hide scrollbar: thumb is transparent by default, fades in while
+   the user is actively scrolling (ScrollbarAutoHide toggles data-scrolling
+   on <html>), then fades out ~1s after idle. */
+* { scrollbar-width: thin; scrollbar-color: transparent transparent; transition: scrollbar-color 300ms ease; }
+html[data-scrolling="true"] * { scrollbar-color: rgba(128,128,128,0.35) transparent; }
+
+*::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-track-piece { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  transition: background-color 300ms ease;
+}
+html[data-scrolling="true"] *::-webkit-scrollbar-thumb {
+  background: rgba(128,128,128,0.35);
+  background-clip: content-box;
+}
+html[data-scrolling="true"] *::-webkit-scrollbar-thumb:hover {
+  background: rgba(128,128,128,0.55);
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-corner { background: transparent; }
+
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Grain overlay used on hero + CTA (soft-light noise) */
+.mono-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Utility: fluid container capped at 1600px with side margin */
+.mono-container {
+  width: 100%;
+  max-width: var(--max-width-main);
+  margin-inline: auto;
+  padding-inline: var(--site-margin);
+}
+
+/* 12-col grid utility */
+.mono-grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--site-gutter);
+}
+
+/* Meta label (Suisse Mono all-caps small) */
+.mono-eyebrow {
+  font-family: "Suisse Mono", ui-monospace, monospace;
+  font-size: var(--font-size-text-xsmall);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--mono-black-50);
+}

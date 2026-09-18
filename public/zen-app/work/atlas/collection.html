@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Collection</title>
+
+<style>
+
+body{
+  background:#0a0a0f;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+#stats{
+  margin-bottom:20px;
+}
+
+.country{
+  background:#111118;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🌍 My Currency Collection</h1>
+
+<div id="stats"></div>
+
+<div id="countryList"></div>
+
+<script>
+
+const collected =
+  JSON.parse(localStorage.getItem("collected"))
+  || [];
+
+document.getElementById("stats").innerHTML =
+`
+Collected: ${collected.length} countries
+`;
+
+const list =
+  document.getElementById("countryList");
+
+collected.sort().forEach(country => {
+
+  const div = document.createElement("div");
+
+  div.className = "country";
+
+  div.textContent = "✓ " + country;
+
+  list.appendChild(div);
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#1a1b3a"/>
+      <stop offset="55%" stop-color="#0a0a1a"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe5a0"/>
+      <stop offset="40%" stop-color="#ffb45a"/>
+      <stop offset="100%" stop-color="#ff7040" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="planetA" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#8fb0ff"/>
+      <stop offset="60%" stop-color="#3b4d8a"/>
+      <stop offset="100%" stop-color="#0e1224"/>
+    </radialGradient>
+    <radialGradient id="planetB" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#f5a870"/>
+      <stop offset="60%" stop-color="#8a4a35"/>
+      <stop offset="100%" stop-color="#2a1508"/>
+    </radialGradient>
+    <radialGradient id="planetC" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#c8d0e0"/>
+      <stop offset="60%" stop-color="#606880"/>
+      <stop offset="100%" stop-color="#12141c"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" />
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" />
+    </filter>
+  </defs>
+
+  <!-- Deep space background -->
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <!-- Star field -->
+  <g fill="#ffffff" opacity="0.9">
+    <circle cx="120" cy="140" r="1"/>
+    <circle cx="240" cy="90"  r="1.4"/>
+    <circle cx="360" cy="210" r="0.9"/>
+    <circle cx="500" cy="60"  r="1.6"/>
+    <circle cx="640" cy="150" r="1"/>
+    <circle cx="780" cy="80"  r="1.2"/>
+    <circle cx="920" cy="220" r="0.8"/>
+    <circle cx="1060" cy="120" r="1.4"/>
+    <circle cx="1200" cy="70"  r="1"/>
+    <circle cx="1340" cy="180" r="1.6"/>
+    <circle cx="1480" cy="90"  r="1"/>
+    <circle cx="80"   cy="380" r="1.2"/>
+    <circle cx="180"  cy="480" r="0.8"/>
+    <circle cx="320"  cy="440" r="1.4"/>
+    <circle cx="1360" cy="420" r="1"/>
+    <circle cx="1440" cy="520" r="1.4"/>
+    <circle cx="140"  cy="720" r="1"/>
+    <circle cx="260"  cy="820" r="1.6"/>
+    <circle cx="380"  cy="900" r="1"/>
+    <circle cx="1260" cy="780" r="1.2"/>
+    <circle cx="1420" cy="860" r="1"/>
+    <circle cx="1500" cy="920" r="1.4"/>
+  </g>
+  <g fill="#c8ccff" opacity="0.55">
+    <circle cx="90"  cy="220" r="0.7"/>
+    <circle cx="430" cy="320" r="0.7"/>
+    <circle cx="760" cy="360" r="0.6"/>
+    <circle cx="1120" cy="330" r="0.7"/>
+    <circle cx="1490" cy="360" r="0.7"/>
+    <circle cx="220"  cy="600" r="0.7"/>
+    <circle cx="560"  cy="660" r="0.6"/>
+    <circle cx="960"  cy="620" r="0.7"/>
+    <circle cx="1200" cy="680" r="0.7"/>
+  </g>
+
+  <!-- Central star (host) -->
+  <g transform="translate(800 500)">
+    <circle r="220" fill="url(#sun)" filter="url(#glow)" opacity="0.9"/>
+    <circle r="52"  fill="#fff5c8"/>
+    <circle r="72"  fill="none" stroke="#ffd48a" stroke-width="1" opacity="0.4"/>
+  </g>
+
+  <!-- Orbit rings -->
+  <g transform="translate(800 500)" fill="none" stroke="#7a86b8" stroke-width="1" opacity="0.35">
+    <ellipse cx="0" cy="0" rx="190" ry="52" transform="rotate(-14)"/>
+    <ellipse cx="0" cy="0" rx="300" ry="82" transform="rotate(-14)"/>
+    <ellipse cx="0" cy="0" rx="430" ry="118" transform="rotate(-14)"/>
+    <ellipse cx="0" cy="0" rx="580" ry="160" transform="rotate(-14)"/>
+  </g>
+
+  <!-- Planets on their orbits -->
+  <g transform="translate(800 500) rotate(-14)">
+    <g transform="translate(-160 -30)">
+      <circle r="18" fill="url(#planetA)"/>
+      <circle r="26" fill="#8fb0ff" opacity="0.10" filter="url(#softGlow)"/>
+    </g>
+    <g transform="translate(220 60)">
+      <circle r="30" fill="url(#planetB)"/>
+      <ellipse cx="0" cy="0" rx="48" ry="8" fill="none" stroke="#e0b090" stroke-width="1.5" opacity="0.6"/>
+    </g>
+    <g transform="translate(-360 90)">
+      <circle r="22" fill="url(#planetC)"/>
+    </g>
+    <g transform="translate(510 -30)">
+      <circle r="14" fill="url(#planetA)"/>
+    </g>
+  </g>
+
+  <!-- Left rail (mode nav) -->
+  <g font-family="'JetBrains Mono', 'Menlo', monospace" font-size="14" fill="#c8ccff" opacity="0.75">
+    <circle cx="60" cy="265" r="3" fill="#818cf8"/>
+    <text x="80" y="270">SYSTEM</text>
+    <text x="80" y="330" opacity="0.55">CLASSIFY</text>
+    <text x="80" y="390" opacity="0.55">GENERATE</text>
+    <text x="80" y="450" opacity="0.55">TIMELINE</text>
+  </g>
+
+  <!-- Bottom-left title -->
+  <g font-family="'Inter', 'Khteka', sans-serif" fill="#e8e8f0">
+    <text x="60" y="880" font-size="46" font-weight="700" letter-spacing="-1">EXOSYS</text>
+    <text x="60" y="920" font-size="16" opacity="0.75" letter-spacing="0.5">EXOPLANET INTELLIGENCE SYSTEM</text>
+  </g>
+
+  <!-- Bottom-right telemetry -->
+  <g font-family="'JetBrains Mono', 'Menlo', monospace" font-size="14" fill="#c8ccff" text-anchor="end">
+    <g>
+      <circle cx="1370" cy="822" r="4" fill="#7dd97a"/>
+      <text x="1540" y="827" opacity="0.85">LINK ACTIVE</text>
+    </g>
+    <text x="1540" y="858" opacity="0.85">CATALOG:   10</text>
+    <text x="1540" y="880" opacity="0.85">HABITABLE:  6</text>
+    <text x="1540" y="902" opacity="0.85">MEAN R:  4.88 R⊕</text>
+  </g>
+</svg>

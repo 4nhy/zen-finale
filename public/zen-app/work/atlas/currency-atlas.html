@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currency Atlas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --surface2: #1a1a24;
+      --border: #ffffff12; --mint: #00e5a0; --mint-dim: #00e5a018;
+      --mint-glow: #00e5a040; --text: #e8e8f0; --muted: #7070a0;
+      --red: #ff4466; --euro: #003399; --euro-dim: #00339918;
+      --radius: 14px; --panel-w: 380px; --bar-h: 58px;
+      --ease: 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    html, body { height:100%; overflow:hidden; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); }
+
+    /* ── TOP BAR ── */
+    #topBar { position:fixed; top:0; left:0; right:0; height:var(--bar-h); background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; padding:0 14px; z-index:1500; }
+    #togglePanel { background:none; border:none; color:var(--muted); font-size:20px; cursor:pointer; padding:4px; flex-shrink:0; transition:color .2s; }
+    #togglePanel:hover { color:var(--mint); }
+    #siteTitle { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; white-space:nowrap; flex-shrink:0; }
+    #siteTitle span { color:var(--mint); }
+
+    /* search */
+    #searchWrapper { position:relative; flex:1; max-width:250px; }
+    #searchBox { width:100%; padding:8px 12px 8px 32px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:13px; transition:border-color var(--ease),box-shadow var(--ease); }
+    #searchBox::placeholder { color:var(--muted); }
+    #searchBox:focus { outline:none; border-color:var(--mint); box-shadow:0 0 0 3px var(--mint-glow); }
+    #searchIcon { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; pointer-events:none; }
+    #suggestions { position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--surface); border:1px solid var(--border); border-radius:10px; z-index:9999; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.5); display:none; max-height:260px; overflow-y:auto; }
+    #suggestions.open { display:block; }
+    .sug-item { padding:10px 14px; font-size:13px; cursor:pointer; border-bottom:1px solid var(--border); transition:background .15s; display:flex; align-items:center; gap:8px; }
+    .sug-item:last-child { border-bottom:none; }
+    .sug-item:hover { background:var(--mint-dim); color:var(--mint); }
+    .sug-euro { font-size:10px; background:var(--euro-dim); color:#6699ff; padding:2px 6px; border-radius:10px; }
+
+    /* region filter */
+    #regionFilter { display:flex; gap:5px; flex-shrink:0; }
+    .rbtn { padding:5px 10px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:12px; font-family:'Inter',sans-serif; cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .rbtn:hover { border-color:var(--mint); color:var(--mint); }
+    .rbtn.active { background:var(--mint); border-color:var(--mint); color:#000; font-weight:600; }
+
+    /* ring */
+    #ringWrap { display:flex; align-items:center; gap:9px; margin-left:auto; flex-shrink:0; }
+    #ringWrap svg { overflow:visible; }
+    #progressArc { transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+    #ringPulse { position:absolute; inset:0; border:2px solid var(--mint); border-radius:50%; opacity:0; pointer-events:none; }
+    #progressLabel { font-family:'Space Grotesk',sans-serif; font-size:11px; color:var(--muted); text-align:right; line-height:1.4; }
+    #progressLabel strong { display:block; color:var(--mint); font-size:15px; font-weight:700; }
+
+    /* ── MAP ── */
+    #map { position:fixed; top:var(--bar-h); left:0; right:0; bottom:0; z-index:1; }
+    .leaflet-interactive { outline:none; }
+    .leaflet-control-zoom a { background:#fff !important; color:#555 !important; border-color:#ddd !important; box-shadow:0 1px 4px rgba(0,0,0,.15) !important; }
+    .leaflet-control-zoom a:hover { color:#00a36b !important; }
+    .country-label { color:#222; font-weight:600; font-size:11px; background:transparent; border:none; text-shadow:0 1px 3px rgba(255,255,255,.9); font-family:'Inter',sans-serif; }
+
+    /* ── PANEL ── */
+    #infoPanel { position:fixed; top:var(--bar-h); left:calc(-1 * var(--panel-w)); width:var(--panel-w); height:calc(100% - var(--bar-h)); background:var(--surface); border-right:1px solid var(--border); z-index:1200; transition:left var(--ease); display:flex; flex-direction:column; }
+    #infoPanel.active { left:0; }
+    #panelArrow { position:absolute; top:50%; right:-28px; transform:translateY(-50%); width:28px; height:56px; background:var(--surface); border:1px solid var(--border); border-left:none; color:var(--muted); display:flex; align-items:center; justify-content:center; border-radius:0 10px 10px 0; cursor:pointer; font-size:16px; z-index:10; transition:color .2s; user-select:none; }
+    #panelArrow:hover { color:var(--mint); }
+    #resizeHandle { position:absolute; top:0; right:0; width:5px; height:100%; cursor:ew-resize; z-index:11; }
+    #resizeHandle:hover { background:var(--mint-glow); }
+    #panelContent { flex:1; overflow-y:auto; padding:20px 18px 16px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+    #panelContent::-webkit-scrollbar { width:4px; }
+    #panelContent::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+    .slabel { font-family:'Space Grotesk',sans-serif; font-size:10px; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:7px; margin-top:18px; }
+    #countryName { font-family:'Space Grotesk',sans-serif; font-size:23px; font-weight:700; line-height:1.2; margin-bottom:6px; }
+
+    /* badges row */
+    #badgeRow { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:12px; }
+    .badge { display:inline-flex; align-items:center; gap:5px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px; }
+    .badge-currency { background:var(--mint-dim); border:1px solid var(--mint-glow); color:var(--mint); }
+    .badge-euro { background:var(--euro-dim); border:1px solid #003399aa; color:#6699ff; }
+
+    #countryFlag { width:100%; height:160px; object-fit:cover; border-radius:var(--radius); background:var(--surface2); border:1px solid var(--border); display:block; margin-bottom:0; }
+    .divider { height:1px; background:var(--border); margin:15px 0; }
+    #historyText { line-height:1.75; color:#9090b8; font-size:13.5px; }
+    #slider { display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; scroll-behavior:smooth; scrollbar-width:none; }
+    #slider::-webkit-scrollbar { display:none; }
+    #slider img { width:155px; height:95px; object-fit:cover; border-radius:10px; flex-shrink:0; cursor:pointer; background:var(--surface2); border:1px solid var(--border); transition:border-color .2s,transform .2s; }
+    #slider img:hover { border-color:var(--mint); transform:scale(1.03); }
+
+    /* converter */
+    #converterWrap { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius); padding:13px; }
+    .crow { display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+    .crow:last-child { margin-bottom:0; }
+    .clabel { font-size:11px; color:var(--muted); width:36px; flex-shrink:0; font-family:'Space Grotesk',sans-serif; font-weight:600; }
+    .cinput { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 11px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; transition:border-color .2s; }
+    .cinput:focus { outline:none; border-color:var(--mint); }
+    .ccode { font-size:11px; color:var(--muted); width:34px; text-align:right; font-family:'Space Grotesk',sans-serif; }
+    #rateNote { font-size:11px; color:var(--muted); margin-top:9px; text-align:center; line-height:1.7; }
+    #rateNote.ok { color:var(--text); }
+    #rateNote.err { color:var(--red); }
+
+    /* notes */
+    #notesWrap { margin-top:4px; }
+    #notesField { width:100%; min-height:72px; resize:vertical; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-family:'Inter',sans-serif; font-size:13px; line-height:1.6; transition:border-color .2s; }
+    #notesField::placeholder { color:var(--muted); }
+    #notesField:focus { outline:none; border-color:var(--mint); }
+    #notesSaved { font-size:11px; color:var(--mint); margin-top:5px; opacity:0; transition:opacity .3s; text-align:right; }
+    #notesSaved.show { opacity:1; }
+
+    /* eurozone collect all */
+    #eurozoneBtn { width:100%; margin-top:10px; padding:11px; border:1px solid #003399aa; border-radius:var(--radius); background:var(--euro-dim); color:#6699ff; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; cursor:pointer; transition:background .2s,opacity .2s; }
+    #eurozoneBtn:hover { background:#003399aa; color:#fff; }
+
+    /* collect */
+    #collectBtn { width:100%; margin-top:10px; padding:13px; border:none; border-radius:var(--radius); background:var(--mint); color:#000; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; cursor:pointer; transition:opacity .2s,transform .15s; }
+    #collectBtn:hover { opacity:.87; transform:translateY(-1px); }
+    #collectBtn.collected { background:var(--surface2); border:1px solid var(--red); color:var(--red); }
+
+    /* stats bar */
+    #statsBar { display:none; align-items:center; justify-content:space-between; background:var(--surface); border-top:1px solid var(--border); padding:11px 18px; flex-shrink:0; }
+    #statsBar.visible { display:flex; }
+    .stat-item { text-align:center; flex:1; }
+    .stat-item + .stat-item { border-left:1px solid var(--border); }
+    .stat-num { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; color:var(--mint); line-height:1; }
+    .stat-lbl { font-size:10px; color:var(--muted); margin-top:3px; text-transform:uppercase; letter-spacing:1px; }
+
+    /* reset */
+    #resetView { position:fixed; bottom:22px; right:20px; z-index:1500; width:44px; height:44px; border:1px solid var(--border); border-radius:50%; background:var(--surface); color:var(--muted); cursor:pointer; font-size:18px; transition:border-color .2s,color .2s; display:flex; align-items:center; justify-content:center; }
+    #resetView:hover { border-color:var(--mint); color:var(--mint); }
+
+    /* loading */
+    #loadingOverlay { position:fixed; inset:0; top:var(--bar-h); background:var(--bg); z-index:500; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; transition:opacity .5s; }
+    #loadingOverlay.done { opacity:0; pointer-events:none; }
+    #loadSpinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--mint); border-radius:50%; animation:spin .8s linear infinite; }
+    #loadingOverlay p { color:var(--muted); font-size:13px; }
+
+    /* viewer */
+    #imageViewer { position:fixed; inset:0; background:rgba(0,0,0,.94); z-index:99999; display:none; flex-direction:column; align-items:center; justify-content:center; padding:30px; backdrop-filter:blur(8px); }
+    #imageViewer.active { display:flex; }
+    #viewerImage { max-width:90%; max-height:75vh; border-radius:16px; object-fit:contain; box-shadow:0 0 60px rgba(0,229,160,.1); }
+    #viewerHistory { margin-top:18px; max-width:860px; color:#9090b8; line-height:1.75; font-size:15px; text-align:center; }
+    #closeViewer { position:absolute; top:20px; right:26px; color:var(--muted); font-size:32px; cursor:pointer; line-height:1; transition:color .2s; }
+    #closeViewer:hover { color:var(--text); }
+
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @keyframes ringPulse { 0%{transform:scale(1);opacity:.6;} 100%{transform:scale(1.8);opacity:0;} }
+    .pulse-ring { animation:ringPulse .6s ease-out forwards; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topBar">
+  <button id="togglePanel" title="Toggle panel">☰</button>
+  <div id="siteTitle">🌍 Currency <span>Atlas</span></div>
+  <div id="searchWrapper">
+    <span id="searchIcon">🔍</span>
+    <input type="text" id="searchBox" placeholder="Search country…" autocomplete="off" />
+    <div id="suggestions"></div>
+  </div>
+  <div id="regionFilter">
+    <button class="rbtn active" data-region="all">All</button>
+    <button class="rbtn" data-region="Africa">Africa</button>
+    <button class="rbtn" data-region="Americas">Americas</button>
+    <button class="rbtn" data-region="Asia">Asia</button>
+    <button class="rbtn" data-region="Europe">Europe</button>
+    <button class="rbtn" data-region="Oceania">Oceania</button>
+  </div>
+  <div id="ringWrap">
+    <div style="position:relative;width:40px;height:40px;">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="16" fill="none" stroke="#ffffff0d" stroke-width="3"/>
+        <circle id="progressArc" cx="20" cy="20" r="16" fill="none" stroke="#00e5a0" stroke-width="3"
+                stroke-linecap="round" stroke-dasharray="100.53" stroke-dashoffset="100.53"
+                transform="rotate(-90 20 20)"/>
+      </svg>
+      <div id="ringPulse" style="position:absolute;inset:0;border:2px solid #00e5a0;border-radius:50%;opacity:0;"></div>
+    </div>
+    <div id="progressLabel"><strong id="progressPct">0%</strong>collected</div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div id="map"></div>
+
+<!-- LOADING -->
+<div id="loadingOverlay">
+  <div id="loadSpinner"></div>
+  <p id="loadMsg">Loading world map…</p>
+</div>
+
+<!-- RESET -->
+<button id="resetView" title="Reset view">🌍</button>
+
+<!-- SIDE PANEL -->
+<div id="infoPanel">
+  <div id="panelArrow">›</div>
+  <div id="resizeHandle"></div>
+  <div id="panelContent">
+
+    <div class="slabel">Country</div>
+    <div id="countryName">Select a country</div>
+    <div id="badgeRow"></div>
+    <img id="countryFlag" src="" alt="Flag" />
+
+    <div class="divider"></div>
+    <div class="slabel">Banknotes</div>
+    <div id="slider"></div>
+
+    <div class="slabel" style="margin-top:14px;">History</div>
+    <p id="historyText">Click on a country to explore its currency.</p>
+
+    <div class="divider"></div>
+    <div class="slabel">Converter</div>
+    <div id="converterWrap">
+      <div class="crow">
+        <span class="clabel">USD</span>
+        <input class="cinput" id="convUSD" type="number" value="1" min="0" />
+        <span class="ccode">$</span>
+      </div>
+      <div class="crow">
+        <span class="clabel" id="convLocalLabel">—</span>
+        <input class="cinput" id="convLocal" type="number" placeholder="0" />
+        <span class="ccode" id="convLocalSymbol"></span>
+      </div>
+      <p id="rateNote">Select a country to see rate</p>
+    </div>
+
+    <div class="divider"></div>
+    <div class="slabel">My Notes</div>
+    <div id="notesWrap">
+      <textarea id="notesField" placeholder="Add your personal notes about this currency — where you got it, condition, memories…"></textarea>
+      <div id="notesSaved">✓ Saved</div>
+    </div>
+
+    <button id="eurozoneBtn" style="display:none;">🇪🇺 Collect all Eurozone countries</button>
+    <button id="collectBtn">Add to Collection ✅</button>
+
+  </div>
+  <div id="statsBar">
+    <div class="stat-item"><div class="stat-num" id="statCollected">0</div><div class="stat-lbl">Collected</div></div>
+    <div class="stat-item"><div class="stat-num" id="statRemaining">—</div><div class="stat-lbl">Remaining</div></div>
+    <div class="stat-item"><div class="stat-num" id="statPct">0%</div><div class="stat-lbl">Progress</div></div>
+  </div>
+</div>
+
+<!-- FULLSCREEN VIEWER -->
+<div id="imageViewer">
+  <span id="closeViewer">✕</span>
+  <img id="viewerImage" alt="Banknote" />
+  <p id="viewerHistory"></p>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════
+//  Currency Atlas
+// ═══════════════════════════════════════════════════════
+
+let isResizing = false, currencyData = {}, geoLayer, allLayers = {};
+let totalCountries = 0, activeRegion = "all", currentRate = null;
+let _map, _currentCountry = null;
+
+// ── EUROZONE ──
+const EUROZONE = [
+  "Austria","Belgium","Cyprus","Estonia","Finland","France","Germany",
+  "Greece","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta",
+  "Netherlands","Portugal","Slovakia","Slovenia","Spain","Monaco",
+  "San Marino","Vatican City","Andorra","Kosovo","Montenegro"
+];
+
+const REGION_MAP = {
+  Africa:["Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cabo Verde","Cameroon","Central African Republic","Chad","Comoros","Congo","Côte d'Ivoire","Djibouti","Egypt","Equatorial Guinea","Eritrea","Eswatini","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Malawi","Mali","Mauritania","Mauritius","Morocco","Mozambique","Namibia","Niger","Nigeria","Rwanda","São Tomé and Príncipe","Senegal","Sierra Leone","Somalia","South Africa","South Sudan","Sudan","Tanzania","Togo","Tunisia","Uganda","Zambia","Zimbabwe","Democratic Republic of the Congo","Republic of the Congo"],
+  Americas:["Antigua and Barbuda","Argentina","Bahamas","Barbados","Belize","Bolivia","Brazil","Canada","Chile","Colombia","Costa Rica","Cuba","Dominica","Dominican Republic","Ecuador","El Salvador","Grenada","Guatemala","Guyana","Haiti","Honduras","Jamaica","Mexico","Nicaragua","Panama","Paraguay","Peru","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Suriname","Trinidad and Tobago","United States of America","Uruguay","Venezuela"],
+  Asia:["Afghanistan","Armenia","Azerbaijan","Bahrain","Bangladesh","Bhutan","Brunei","Cambodia","China","Cyprus","Georgia","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Kazakhstan","Kuwait","Kyrgyzstan","Laos","Lebanon","Malaysia","Maldives","Mongolia","Myanmar","Nepal","North Korea","Oman","Pakistan","Palestine","Philippines","Qatar","Saudi Arabia","Singapore","South Korea","Sri Lanka","Syria","Taiwan","Tajikistan","Thailand","Timor-Leste","Turkey","Turkmenistan","United Arab Emirates","Uzbekistan","Vietnam","Yemen"],
+  Europe:["Albania","Andorra","Austria","Belarus","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Kosovo","Latvia","Liechtenstein","Lithuania","Luxembourg","Malta","Moldova","Monaco","Montenegro","Netherlands","North Macedonia","Norway","Poland","Portugal","Romania","Russia","San Marino","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Ukraine","United Kingdom","Vatican City"],
+  Oceania:["Australia","Fiji","Kiribati","Marshall Islands","Micronesia","Nauru","New Zealand","Palau","Papua New Guinea","Samoa","Solomon Islands","Tonga","Tuvalu","Vanuatu"]
+};
+
+// ── STORAGE ──
+const getCollected  = () => JSON.parse(localStorage.getItem("collected"))  || [];
+const saveCollected = arr => localStorage.setItem("collected", JSON.stringify(arr));
+const getNotes      = () => JSON.parse(localStorage.getItem("notes"))      || {};
+const saveNotes     = obj => localStorage.setItem("notes", JSON.stringify(obj));
+
+// ── STATS ──
+function updateStats() {
+  const n = getCollected().length, total = totalCountries || 195;
+  const pct = Math.round((n / total) * 100);
+  document.getElementById("statCollected").textContent  = n;
+  document.getElementById("statRemaining").textContent  = Math.max(0, total - n);
+  document.getElementById("statPct").textContent        = pct + "%";
+  document.getElementById("progressPct").textContent    = pct + "%";
+  document.getElementById("progressArc").style.strokeDashoffset = 100.53 - (100.53 * pct / 100);
+}
+
+function pulseRing() {
+  const r = document.getElementById("ringPulse");
+  r.classList.remove("pulse-ring"); void r.offsetWidth;
+  r.classList.add("pulse-ring");
+  setTimeout(() => r.classList.remove("pulse-ring"), 700);
+}
+
+// ── COLLECT ──
+function setCollectBtn(btn, name) {
+  const isIn = getCollected().includes(name);
+  btn.textContent = isIn ? "Remove from Collection ❌" : "Add to Collection ✅";
+  btn.classList.toggle("collected", isIn);
+}
+
+function addToCollection(name) {
+  let col = getCollected();
+  if (!col.includes(name)) { col.push(name); pulseRing(); }
+  saveCollected(col);
+}
+function removeFromCollection(name) {
+  saveCollected(getCollected().filter(c => c !== name));
+}
+
+function toggleCountry(name) {
+  if (getCollected().includes(name)) removeFromCollection(name);
+  else addToCollection(name);
+  refreshMapColors();
+  updateStats();
+  setCollectBtn(document.getElementById("collectBtn"), name);
+}
+
+function collectAllEurozone() {
+  let col = getCollected();
+  let added = 0;
+  EUROZONE.forEach(c => { if (!col.includes(c)) { col.push(c); added++; } });
+  saveCollected(col);
+  if (added > 0) pulseRing();
+  refreshMapColors();
+  updateStats();
+  if (_currentCountry) setCollectBtn(document.getElementById("collectBtn"), _currentCountry);
+  const btn = document.getElementById("eurozoneBtn");
+  btn.textContent = "🇪🇺 All " + EUROZONE.length + " Eurozone countries collected!";
+  btn.style.opacity = "0.5";
+  btn.disabled = true;
+}
+
+// ── MAP COLORS ──
+function countryFillColor(name, collected) {
+  if (collected.includes(name)) return { color: "#00c97a", opacity: 0.55 };
+  if (EUROZONE.includes(name))  return { color: "#4466ff", opacity: 0.20 };
+  const inR = activeRegion === "all" || (REGION_MAP[activeRegion] || []).includes(name);
+  return { color: inR ? "#4a90d9" : "#aaaaaa", opacity: inR ? 0.15 : 0.06 };
+}
+
+function refreshMapColors() {
+  if (!geoLayer) return;
+  const col = getCollected();
+  geoLayer.eachLayer(layer => {
+    const { color, opacity } = countryFillColor(layer.feature.properties.name, col);
+    layer.setStyle({ fillColor: color, fillOpacity: opacity });
+  });
+}
+
+// ── PANEL TOGGLE ── wired immediately
+function togglePanel() {
+  const p = document.getElementById("infoPanel");
+  p.classList.toggle("active");
+  document.getElementById("panelArrow").textContent = p.classList.contains("active") ? "‹" : "›";
+}
+document.getElementById("togglePanel").addEventListener("click", togglePanel);
+document.getElementById("panelArrow").addEventListener("click", e => { e.stopPropagation(); togglePanel(); });
+
+// ── RESET ──
+document.getElementById("resetView").onclick = () => {
+  if (_map) _map.setView([20, 0], 2);
+  document.getElementById("infoPanel").classList.remove("active");
+  document.getElementById("panelArrow").textContent = "›";
+};
+
+// ── VIEWER ──
+document.getElementById("closeViewer").onclick = () =>
+  document.getElementById("imageViewer").classList.remove("active");
+
+// ── CONVERTER ──
+// Uses @fawazahmed0/currency-api via jsDelivr — free, no key, CORS-safe, 150+ currencies, updates daily.
+// Everything is compared to USD as the universal base.
+let _ratesCache    = null;   // today's USD-base rates
+let _ratesYest     = null;   // yesterday's rates for change %
+let _ratesFetched  = false;
+
+const FAWAZ_TODAY = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json";
+const FAWAZ_YEST  = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
+// fallback mirror
+const FAWAZ_TODAY_FB = "https://latest.currency-api.pages.dev/v1/currencies/usd.json";
+
+async function fetchAllRates() {
+  if (_ratesFetched) return;
+  _ratesFetched = true;
+  try {
+    // Today's rates
+    let r = await fetch(FAWAZ_TODAY);
+    if (!r.ok) r = await fetch(FAWAZ_TODAY_FB);
+    if (!r.ok) throw new Error("rate fetch failed");
+    const d = await r.json();
+    _ratesCache = d.usd; // object: { eur: 0.92, gbp: 0.79, qar: 3.64, ... }
+
+    // Yesterday's rates for daily change (same API, yesterday param)
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    const yy = yesterday.getFullYear();
+    const mm = String(yesterday.getMonth()+1).padStart(2,"0");
+    const dd = String(yesterday.getDate()).padStart(2,"0");
+    const yestUrl = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${yy}-${mm}-${dd}/v1/currencies/usd.json`;
+    try {
+      const ry = await fetch(yestUrl);
+      if (ry.ok) { const dy = await ry.json(); _ratesYest = dy.usd; }
+    } catch { /* yesterday optional */ }
+
+  } catch(e) {
+    console.warn("Currency API failed:", e);
+    _ratesCache = null;
+  }
+}
+
+async function loadRate(code) {
+  currentRate = null;
+  const rateEl  = document.getElementById("rateNote");
+  const usdEl   = document.getElementById("convUSD");
+  const localEl = document.getElementById("convLocal");
+
+  document.getElementById("convLocalLabel").textContent  = code ? code.toUpperCase() : "—";
+  document.getElementById("convLocalSymbol").textContent = code ? code.toUpperCase() : "";
+
+  if (!code) {
+    localEl.value = "";
+    rateEl.innerHTML = "Select a country to see rate";
+    rateEl.className = "";
+    return;
+  }
+
+  rateEl.innerHTML = "⏳ Loading live rate…";
+  rateEl.className = "";
+  usdEl.value = 1;
+  localEl.value = "";
+
+  await fetchAllRates();
+
+  if (!_ratesCache) {
+    rateEl.innerHTML = "⚠️ Rate unavailable — check internet";
+    rateEl.className = "err";
+    return;
+  }
+
+  const key = code.toLowerCase();
+  if (key === "usd") {
+    currentRate = 1;
+  } else {
+    currentRate = _ratesCache[key] ?? null;
+  }
+
+  if (currentRate === null) {
+    rateEl.innerHTML = "⚠️ No rate data for <b>" + code.toUpperCase() + "</b>";
+    rateEl.className = "err";
+    return;
+  }
+
+  // Format: smart decimal places (crypto/tiny currencies need more)
+  const dp = currentRate > 100 ? 2 : currentRate > 1 ? 4 : 6;
+  localEl.value = currentRate.toFixed(dp);
+
+  // Daily change
+  let changeHTML = "";
+  if (_ratesYest && _ratesYest[key]) {
+    const prev = _ratesYest[key];
+    const pct  = ((currentRate - prev) / prev) * 100;
+    const sign = pct >= 0 ? "+" : "";
+    const col  = pct >= 0 ? "#00e5a0" : "#ff4466";
+    const arrow = pct >= 0 ? "▲" : "▼";
+    changeHTML = ` <span style="color:${col};font-weight:600;">${arrow} ${sign}${pct.toFixed(3)}%</span>`;
+  }
+
+  rateEl.innerHTML = `1 USD = <b style="color:var(--mint)">${currentRate.toFixed(dp)} ${code.toUpperCase()}</b>${changeHTML}<br><span style="font-size:10px;opacity:.6;">Updated daily · source: fawazahmed0/currency-api</span>`;
+  rateEl.className = "ok";
+}
+
+// Two-way conversion: USD → local
+document.getElementById("convUSD").addEventListener("input", function () {
+  if (currentRate === null) return;
+  const dp = currentRate > 100 ? 2 : currentRate > 1 ? 4 : 6;
+  document.getElementById("convLocal").value = (parseFloat(this.value || 0) * currentRate).toFixed(dp);
+});
+
+// Two-way conversion: local → USD (type in the local field, get USD back)
+document.getElementById("convLocal").addEventListener("input", function () {
+  if (currentRate === null || currentRate === 0) return;
+  document.getElementById("convUSD").value = (parseFloat(this.value || 0) / currentRate).toFixed(4);
+});
+
+// ── NOTES ──
+let _notesSaveTimer = null;
+document.getElementById("notesField").addEventListener("input", function () {
+  clearTimeout(_notesSaveTimer);
+  const savedEl = document.getElementById("notesSaved");
+  savedEl.classList.remove("show");
+  _notesSaveTimer = setTimeout(() => {
+    if (!_currentCountry) return;
+    const notes = getNotes();
+    const val = this.value.trim();
+    if (val) notes[_currentCountry] = val;
+    else delete notes[_currentCountry];
+    saveNotes(notes);
+    savedEl.classList.add("show");
+    setTimeout(() => savedEl.classList.remove("show"), 1800);
+  }, 600);
+});
+
+// ── COUNTRY → CURRENCY CODE (hardcoded fallback, works without currencies.json) ──
+const COUNTRY_CURRENCY = {
+  "Afghanistan":"AFN","Albania":"ALL","Algeria":"DZD","Angola":"AOA","Argentina":"ARS",
+  "Armenia":"AMD","Australia":"AUD","Azerbaijan":"AZN","Bahrain":"BHD","Bangladesh":"BDT",
+  "Belarus":"BYN","Belize":"BZD","Benin":"XOF","Bhutan":"BTN","Bolivia":"BOB",
+  "Bosnia and Herzegovina":"BAM","Botswana":"BWP","Brazil":"BRL","Brunei":"BND",
+  "Bulgaria":"BGN","Burkina Faso":"XOF","Burundi":"BIF","Cambodia":"KHR","Cameroon":"XAF",
+  "Canada":"CAD","Central African Republic":"XAF","Chad":"XAF","Chile":"CLP","China":"CNY",
+  "Colombia":"COP","Comoros":"KMF","Congo":"XAF","Costa Rica":"CRC","Croatia":"EUR",
+  "Cuba":"CUP","Czech Republic":"CZK","Democratic Republic of the Congo":"CDF",
+  "Denmark":"DKK","Djibouti":"DJF","Dominican Republic":"DOP","Ecuador":"USD",
+  "Egypt":"EGP","El Salvador":"USD","Equatorial Guinea":"XAF","Eritrea":"ERN",
+  "Eswatini":"SZL","Ethiopia":"ETB","Fiji":"FJD","Gabon":"XAF","Gambia":"GMD",
+  "Ghana":"GHS","Guatemala":"GTQ","Guinea":"GNF","Guinea-Bissau":"XOF","Guyana":"GYD",
+  "Haiti":"HTG","Honduras":"HNL","Hungary":"HUF","Iceland":"ISK","India":"INR",
+  "Indonesia":"IDR","Iran":"IRR","Iraq":"IQD","Israel":"ILS","Jamaica":"JMD",
+  "Japan":"JPY","Jordan":"JOD","Kazakhstan":"KZT","Kenya":"KES","Kuwait":"KWD",
+  "Kyrgyzstan":"KGS","Laos":"LAK","Latvia":"EUR","Lebanon":"LBP","Lesotho":"LSL",
+  "Liberia":"LRD","Libya":"LYD","Lithuania":"EUR","Madagascar":"MGA","Malawi":"MWK",
+  "Malaysia":"MYR","Maldives":"MVR","Mali":"XOF","Mauritania":"MRU","Mauritius":"MUR",
+  "Mexico":"MXN","Moldova":"MDL","Mongolia":"MNT","Morocco":"MAD","Mozambique":"MZN",
+  "Myanmar":"MMK","Namibia":"NAD","Nepal":"NPR","New Zealand":"NZD","Nicaragua":"NIO",
+  "Niger":"XOF","Nigeria":"NGN","North Korea":"KPW","North Macedonia":"MKD","Norway":"NOK",
+  "Oman":"OMR","Pakistan":"PKR","Palestine":"ILS","Panama":"PAB","Papua New Guinea":"PGK",
+  "Paraguay":"PYG","Peru":"PEN","Philippines":"PHP","Poland":"PLN","Qatar":"QAR",
+  "Republic of the Congo":"XAF","Romania":"RON","Russia":"RUB","Rwanda":"RWF",
+  "Saudi Arabia":"SAR","Senegal":"XOF","Serbia":"RSD","Sierra Leone":"SLL",
+  "Singapore":"SGD","Somalia":"SOS","South Africa":"ZAR","South Korea":"KRW",
+  "South Sudan":"SSP","Sri Lanka":"LKR","Sudan":"SDG","Suriname":"SRD","Sweden":"SEK",
+  "Switzerland":"CHF","Syria":"SYP","Taiwan":"TWD","Tajikistan":"TJS","Tanzania":"TZS",
+  "Thailand":"THB","Togo":"XOF","Trinidad and Tobago":"TTD","Tunisia":"TND",
+  "Turkey":"TRY","Turkmenistan":"TMT","Uganda":"UGX","Ukraine":"UAH",
+  "United Arab Emirates":"AED","United Kingdom":"GBP","United States of America":"USD",
+  "Uruguay":"UYU","Uzbekistan":"UZS","Venezuela":"VES","Vietnam":"VND","Yemen":"YER",
+  "Zambia":"ZMW","Zimbabwe":"ZWL","Cabo Verde":"CVE","Samoa":"WST","Tonga":"TOP",
+  "Vanuatu":"VUV","Solomon Islands":"SBD","Fiji":"FJD","Kiribati":"AUD",
+  "Nauru":"AUD","Tuvalu":"AUD","Palau":"USD","Marshall Islands":"USD",
+  "Micronesia":"USD","Bahamas":"BSD","Barbados":"BBD","Cuba":"CUP",
+  "Dominican Republic":"DOP","Jamaica":"JMD","Haiti":"HTG",
+  "Trinidad and Tobago":"TTD","Antigua and Barbuda":"XCD","Dominica":"XCD",
+  "Grenada":"XCD","Saint Kitts and Nevis":"XCD","Saint Lucia":"XCD",
+  "Saint Vincent and the Grenadines":"XCD","Georgia":"GEL","Armenia":"AMD",
+  "Azerbaijan":"AZN","Cyprus":"EUR","Kosovo":"EUR","Montenegro":"EUR",
+  "Albania":"ALL","Serbia":"RSD","Bosnia and Herzegovina":"BAM",
+  "North Macedonia":"MKD","Moldova":"MDL","Belarus":"BYN","Ukraine":"UAH",
+  "Timor-Leste":"USD","Brunei":"BND","Myanmar":"MMK"
+};
+
+// ── OPEN PANEL ──
+const SPECIAL = {
+  "United States of America":[39,-98], "Russia":[60,100],
+  "Canada":[56,-106], "Norway":[61,8]
+};
+
+function openPanel(name, layer) {
+  _currentCountry = name;
+  const currency  = currencyData[name];
+  const isEuro    = EUROZONE.includes(name);
+  // For eurozone, override currency info to EUR
+  const displayCurrency = isEuro
+    ? { name: "Euro", code: "EUR", history: currency?.history || "This country uses the Euro (€), the official currency of the Eurozone, adopted as part of the European Union's monetary union." }
+    : currency;
+
+  // Country name
+  document.getElementById("countryName").textContent = name;
+
+  // Resolve currency code — JSON first, hardcoded map as fallback
+  const resolvedCode = isEuro ? "EUR" : (currency?.code || COUNTRY_CURRENCY[name] || null);
+
+  // Badges
+  const badgeRow = document.getElementById("badgeRow");
+  badgeRow.innerHTML = "";
+  if (resolvedCode) {
+    const b = document.createElement("div");
+    b.className = "badge badge-currency";
+    b.textContent = (currency?.name || resolvedCode) + " · " + resolvedCode;
+    badgeRow.appendChild(b);
+  }
+  if (isEuro) {
+    const e = document.createElement("div");
+    e.className = "badge badge-euro";
+    e.textContent = "🇪🇺 Eurozone";
+    badgeRow.appendChild(e);
+  }
+
+  // Flag
+  const flag = document.getElementById("countryFlag");
+  flag.style.display = "block";
+  const iso = layer.feature.properties.iso_a2 || "XX";
+  flag.src = currency?.flag || ("https://flagsapi.com/" + iso + "/flat/64.png");
+  flag.onerror = () => { flag.style.display = "none"; };
+
+  // History
+  document.getElementById("historyText").textContent =
+    displayCurrency?.history || "No history available yet.";
+
+  // Banknote slider
+  const slider = document.getElementById("slider");
+  slider.innerHTML = "";
+  (currency?.images || []).forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.onerror = () => { img.src = "https://placehold.co/155x95/1a1a24/7070a0?text=No+Image"; };
+    img.addEventListener("click", () => {
+      document.getElementById("viewerImage").src = src;
+      document.getElementById("viewerHistory").textContent = displayCurrency?.history || "";
+      document.getElementById("imageViewer").classList.add("active");
+    });
+    slider.appendChild(img);
+  });
+
+  // Converter
+  document.getElementById("convUSD").value = 1;
+  document.getElementById("convLocal").value = "";
+  loadRate(resolvedCode);
+
+  // Notes
+  const notes = getNotes();
+  document.getElementById("notesField").value = notes[name] || "";
+  document.getElementById("notesSaved").classList.remove("show");
+
+  // Eurozone collect-all button
+  const ezBtn = document.getElementById("eurozoneBtn");
+
+if (isEuro) {
+  ezBtn.style.display = "block";
+  ezBtn.disabled = false;
+  ezBtn.style.opacity = "1";
+
+  updateEurozoneButton();
+} else {
+  ezBtn.style.display = "none";
+}
+  
+  function removeAllEurozone() {
+  let col = getCollected();
+
+  col = col.filter(country => !EUROZONE.includes(country));
+
+  saveCollected(col);
+
+  refreshMapColors();
+  updateStats();
+
+  if (_currentCountry) {
+    setCollectBtn(document.getElementById("collectBtn"), _currentCountry);
+  }
+
+  updateEurozoneButton();
+}
+
+function updateEurozoneButton() {
+  const ezBtn = document.getElementById("eurozoneBtn");
+
+  const col = getCollected();
+  const euroCollected = EUROZONE.filter(c => col.includes(c)).length;
+
+  if (euroCollected === 0) {
+    ezBtn.textContent = "🇪🇺 Collect all Eurozone countries";
+    ezBtn.onclick = collectAllEurozone;
+  } else {
+    ezBtn.textContent = `🇪🇺 Remove Eurozone countries (${euroCollected})`;
+    ezBtn.onclick = removeAllEurozone;
+  }
+}
+
+  // Collect button
+  const btn = document.getElementById("collectBtn");
+  setCollectBtn(btn, name);
+  btn.onclick = () => toggleCountry(name);
+
+  document.getElementById("statsBar").classList.add("visible");
+  document.getElementById("infoPanel").classList.add("active");
+  document.getElementById("panelArrow").textContent = "‹";
+
+  // Zoom
+  if (SPECIAL[name]) { _map.flyTo(SPECIAL[name], 4, { duration: 1.4 }); }
+  else {
+    try {
+      const c = layer.getBounds().getCenter();
+      _map.flyTo([c.lat, c.lng], 5, { duration: 1.4 });
+    } catch(e) {}
+  }
+}
+
+// ── BUILD GEO LAYER ──
+function buildGeoLayer(data) {
+  totalCountries = data.features.length;
+  updateStats();
+  const col = getCollected();
+
+  geoLayer = L.geoJSON(data, {
+    style: feature => {
+      const name = feature.properties.name;
+      const { color, opacity } = countryFillColor(name, col);
+      return { color: "#777", weight: 0.7, fillColor: color, fillOpacity: opacity };
+    },
+    onEachFeature: (feature, layer) => {
+      const name = feature.properties.name;
+      allLayers[name] = layer;
+      layer.bindTooltip(name, { direction: "center", className: "country-label" });
+      layer.on("mouseover", e => {
+        const col = getCollected();
+        const isCollected = col.includes(name);
+        const isEuro = EUROZONE.includes(name);
+        e.target.setStyle({
+          fillColor:   isCollected ? "#00e5a0" : (isEuro ? "#4466ff" : "#4a90d9"),
+          fillOpacity: 0.42,
+          weight: 2,
+          color: isCollected ? "#00a36b" : "#00e5a0"
+        });
+      });
+      layer.on("mouseout", () => geoLayer.resetStyle(layer));
+      layer.on("click", () => openPanel(name, layer));
+    }
+  }).addTo(_map);
+
+  refreshMapColors();
+
+  // hide loader
+  const ov = document.getElementById("loadingOverlay");
+  ov.classList.add("done");
+  setTimeout(() => { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 600);
+
+  wireSearch();
+}
+
+// ── SEARCH ──
+function wireSearch() {
+  const box = document.getElementById("searchBox");
+  const sug = document.getElementById("suggestions");
+
+  box.addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    sug.innerHTML = "";
+    if (!q) { sug.classList.remove("open"); return; }
+    const hits = Object.keys(allLayers).filter(n => n.toLowerCase().includes(q)).slice(0, 8);
+    if (!hits.length) { sug.classList.remove("open"); return; }
+    hits.forEach(name => {
+      const d = document.createElement("div");
+      d.className = "sug-item";
+      const txt = document.createTextNode(name);
+      d.appendChild(txt);
+      if (EUROZONE.includes(name)) {
+        const tag = document.createElement("span");
+        tag.className = "sug-euro";
+        tag.textContent = "EUR";
+        d.appendChild(tag);
+      }
+      d.addEventListener("click", () => {
+        box.value = name; sug.classList.remove("open");
+        openPanel(name, allLayers[name]);
+      });
+      sug.appendChild(d);
+    });
+    sug.classList.add("open");
+  });
+  document.addEventListener("click", e => { if (!e.target.closest("#searchWrapper")) sug.classList.remove("open"); });
+}
+
+// ── INIT MAP ──
+function initMap() {
+  _map = L.map("map", {
+    center: [20, 0], zoom: 2, minZoom: 2, maxZoom: 8,
+    worldCopyJump: false, maxBounds: [[-90,-180],[90,180]],
+    maxBoundsViscosity: 1.0, zoomControl: false
+  });
+  L.control.zoom({ position: "topright" }).addTo(_map);
+  setTimeout(() => _map.invalidateSize(), 150);
+
+  // CartoDB Voyager — Google Maps style colorful basemap
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+    maxZoom: 10,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>'
+  }).addTo(_map);
+
+  document.getElementById("loadMsg").textContent = "Fetching country data…";
+
+  const CDN      = "https://cdn.jsdelivr.net/gh/datasets/geo-countries@master/data/countries.geojson";
+  const FALLBACK = "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
+
+  fetch(CDN)
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .catch(() => {
+      document.getElementById("loadMsg").textContent = "Trying backup source…";
+      return fetch(FALLBACK).then(r => r.json());
+    })
+    .then(buildGeoLayer)
+    .catch(() => {
+      document.getElementById("loadMsg").textContent = "Map load failed — check internet connection.";
+    });
+}
+
+// ── REGION FILTER ──
+document.querySelectorAll(".rbtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".rbtn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeRegion = btn.dataset.region;
+    refreshMapColors();
+  });
+});
+
+// ── RESIZE ──
+const panel = document.getElementById("infoPanel");
+const statsBar = document.getElementById("statsBar");
+document.getElementById("resizeHandle").addEventListener("mousedown", () => { isResizing = true; });
+document.addEventListener("mousemove", e => {
+  if (!isResizing) return;
+  const w = e.clientX;
+  if (w > 280 && w < 700) {
+    panel.style.width = w + "px"; statsBar.style.width = w + "px";
+    document.documentElement.style.setProperty("--panel-w", w + "px");
+  }
+});
+document.addEventListener("mouseup", () => { isResizing = false; });
+
+// ── BOOT ──
+fetch("currencies.json")
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(d => { currencyData = d; })
+  .catch(() => { currencyData = {}; })
+  .finally(() => { updateStats(); initMap(); });
+
+// Pre-warm the rate cache in the background immediately
+fetchAllRates();
+</script>
+</body>
+</html>

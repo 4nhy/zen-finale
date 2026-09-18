@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a1a"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </linearGradient>
+    <linearGradient id="axis" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#25243a"/>
+      <stop offset="100%" stop-color="#25243a" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="pt" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe5a0"/>
+      <stop offset="70%" stop-color="#ffb45a"/>
+      <stop offset="100%" stop-color="#ffb45a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <!-- Star field -->
+  <g fill="#ffffff" opacity="0.5">
+    <circle cx="80" cy="80" r="0.9"/>
+    <circle cx="380" cy="120" r="1"/>
+    <circle cx="900" cy="80" r="1.2"/>
+    <circle cx="1240" cy="140" r="0.9"/>
+    <circle cx="1500" cy="90" r="1"/>
+  </g>
+
+  <!-- Title -->
+  <g font-family="'Inter', 'Khteka', sans-serif" fill="#e8e8f0">
+    <text x="80" y="90" font-size="12" font-family="'JetBrains Mono', monospace" opacity="0.55" letter-spacing="1.5">/ DISCOVERY TIMELINE</text>
+    <text x="80" y="150" font-size="48" font-weight="700" letter-spacing="-1">1992 → 2025</text>
+    <text x="80" y="185" font-size="14" font-family="'JetBrains Mono', monospace" opacity="0.6">5,847 CONFIRMED EXOPLANETS</text>
+  </g>
+
+  <!-- Chart area -->
+  <g transform="translate(90 720)">
+    <!-- axis -->
+    <line x1="0" y1="0" x2="1420" y2="0" stroke="url(#axis)" stroke-width="1"/>
+    <!-- year ticks -->
+    <g font-family="'JetBrains Mono', monospace" font-size="12" fill="#7a86b8">
+      <g transform="translate(0 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">1992</text></g>
+      <g transform="translate(203 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">1998</text></g>
+      <g transform="translate(406 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2004</text></g>
+      <g transform="translate(609 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2010</text></g>
+      <g transform="translate(812 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2016</text></g>
+      <g transform="translate(1015 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2020</text></g>
+      <g transform="translate(1218 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2023</text></g>
+      <g transform="translate(1420 0)"><line y2="8" stroke="#4a4a6a"/><text y="30" text-anchor="middle">2025</text></g>
+    </g>
+
+    <!-- Bars (annual counts, stylized) -->
+    <g filter="url(#glow)">
+      <rect x="0"    y="-6"   width="6" height="6"   fill="#ffb45a" opacity="0.7"/>
+      <rect x="30"   y="-8"   width="6" height="8"   fill="#ffb45a" opacity="0.7"/>
+      <rect x="60"   y="-10"  width="6" height="10"  fill="#ffb45a" opacity="0.75"/>
+      <rect x="90"   y="-14"  width="6" height="14"  fill="#ffb45a" opacity="0.75"/>
+      <rect x="130"  y="-18"  width="6" height="18"  fill="#ffb45a" opacity="0.8"/>
+      <rect x="180"  y="-24"  width="6" height="24"  fill="#ffb45a" opacity="0.85"/>
+      <rect x="230"  y="-30"  width="6" height="30"  fill="#ffb45a" opacity="0.85"/>
+      <rect x="290"  y="-40"  width="6" height="40"  fill="#f7a870" opacity="0.9"/>
+      <rect x="350"  y="-56"  width="6" height="56"  fill="#f7a870" opacity="0.9"/>
+      <rect x="420"  y="-80"  width="6" height="80"  fill="#f7a870" opacity="0.95"/>
+      <rect x="480"  y="-120" width="6" height="120" fill="#f6885a"/>
+      <rect x="540"  y="-180" width="6" height="180" fill="#f6885a"/>
+      <rect x="600"  y="-260" width="6" height="260" fill="#f56650"/>
+      <rect x="670"  y="-340" width="6" height="340" fill="#f56650"/>
+      <rect x="740"  y="-410" width="6" height="410" fill="#f04a44"/>
+      <rect x="810"  y="-480" width="6" height="480" fill="#f04a44"/>
+      <rect x="870"  y="-500" width="6" height="500" fill="#f04a44"/>
+      <rect x="930"  y="-460" width="6" height="460" fill="#e84a5a"/>
+      <rect x="990"  y="-420" width="6" height="420" fill="#e84a5a"/>
+      <rect x="1060" y="-460" width="6" height="460" fill="#e84a5a"/>
+      <rect x="1120" y="-500" width="6" height="500" fill="#ec5a72"/>
+      <rect x="1180" y="-470" width="6" height="470" fill="#ec5a72"/>
+      <rect x="1240" y="-380" width="6" height="380" fill="#ec5a72"/>
+      <rect x="1300" y="-280" width="6" height="280" fill="#ec5a72"/>
+      <rect x="1360" y="-160" width="6" height="160" fill="#f18aa0"/>
+      <rect x="1400" y="-80"  width="6" height="80"  fill="#f18aa0"/>
+    </g>
+
+    <!-- Highlighted year: 2016 Trappist-1 discovery -->
+    <g transform="translate(812 -500)">
+      <circle r="6" fill="#ffe5a0" filter="url(#glow)"/>
+      <line x1="0" y1="0" x2="0" y2="-50" stroke="#ffe5a0" stroke-width="1" opacity="0.5"/>
+      <text y="-64" font-family="'JetBrains Mono', monospace" font-size="12" fill="#ffe5a0" text-anchor="middle">TRAPPIST-1e</text>
+      <text y="-48" font-family="'JetBrains Mono', monospace" font-size="10" fill="#ffe5a0" text-anchor="middle" opacity="0.75">2016 · HABITABLE</text>
+    </g>
+  </g>
+
+  <!-- Left rail -->
+  <g font-family="'JetBrains Mono', 'Menlo', monospace" font-size="14" fill="#c8ccff" opacity="0.75">
+    <text x="80" y="330" opacity="0.5">SYSTEM</text>
+    <text x="80" y="360" opacity="0.5">PLANET DETAIL</text>
+    <text x="80" y="390" opacity="0.5">CLASSIFY</text>
+    <text x="80" y="420" opacity="0.5">GENERATE</text>
+    <circle cx="60" cy="446" r="3" fill="#818cf8"/>
+    <text x="80" y="450" fill="#e8e8f0">TIMELINE</text>
+  </g>
+</svg>

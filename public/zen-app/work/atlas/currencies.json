@@ -1,0 +1,157 @@
+{
+  "Qatar": {
+    "name": "Qatari Riyal",
+    "code": "QAR",
+    "flag": "images/flags/qatar.png",
+    "images": [
+      "images/notes/qar1.jpg",
+      "images/notes/qar5.jpg",
+      "images/notes/qar10.jpg",
+      "images/notes/qar50.jpg",
+      "images/notes/qar100.jpg",
+      "images/notes/qar200.jpg",
+      "images/notes/qar500.jpeg"
+    ],
+    "history": "The Qatari Riyal was introduced in 1973, replacing the Qatar and Dubai Riyal at par. It has been pegged to the US Dollar at a rate of 3.64 QAR per USD since 1980, making it one of the most stable currencies in the Gulf region."
+  },
+  "United Arab Emirates": {
+    "name": "UAE Dirham",
+    "code": "AED",
+    "flag": "images/flags/uae.png",
+    "images": [],
+    "history": "The UAE Dirham was introduced in 1973 when the UAE unified its currency. It has been pegged to the US Dollar at 3.6725 AED since 1997. The banknotes feature iconic UAE landmarks including the Sheikh Zayed Grand Mosque."
+  },
+  "Saudi Arabia": {
+    "name": "Saudi Riyal",
+    "code": "SAR",
+    "flag": "images/flags/saudi_arabia.png",
+    "images": [],
+    "history": "The Saudi Riyal has been the currency of Saudi Arabia since 1925. It is pegged to the US Dollar at 3.75 SAR. The notes depict the two holy mosques of Mecca and Medina, reflecting the Kingdom's Islamic heritage."
+  },
+  "United States of America": {
+    "name": "US Dollar",
+    "code": "USD",
+    "flag": "images/flags/usa.png",
+    "images": [],
+    "history": "The US Dollar has been the world's primary reserve currency since the Bretton Woods Agreement of 1944. It is the most traded currency in the world and is used as the official currency in several other countries."
+  },
+  "United Kingdom": {
+    "name": "British Pound Sterling",
+    "code": "GBP",
+    "flag": "images/flags/uk.png",
+    "images": [],
+    "history": "The Pound Sterling is the world's oldest currency still in use, dating back to 775 AD. It was the world's dominant reserve currency until the mid-20th century when it was overtaken by the US Dollar."
+  },
+  "France": {
+    "name": "Euro",
+    "code": "EUR",
+    "flag": "images/flags/france.png",
+    "images": [],
+    "history": "France adopted the Euro in 1999 (coins and notes in 2002), replacing the French Franc which had been in use since 1360. French Francs featured iconic figures like Marianne and notable French artists and scientists."
+  },
+  "Germany": {
+    "name": "Euro",
+    "code": "EUR",
+    "flag": "images/flags/germany.png",
+    "images": [],
+    "history": "Germany adopted the Euro in 2002, replacing the Deutsche Mark — one of the world's strongest and most respected currencies throughout the 20th century. The DM was introduced in 1948 and became a symbol of West Germany's economic recovery."
+  },
+  "Japan": {
+    "name": "Japanese Yen",
+    "code": "JPY",
+    "flag": "images/flags/japan.png",
+    "images": [],
+    "history": "The Japanese Yen was introduced in 1871 as part of the Meiji government's modernization reforms. It is the third most traded currency in the world and features portraits of cultural figures like Fukuzawa Yukichi and Higuchi Ichiyo."
+  },
+  "India": {
+    "name": "Indian Rupee",
+    "code": "INR",
+    "flag": "images/flags/india.png",
+    "images": [
+      "images/notes/inr_10.jpg",
+      "images/notes/inr_20.jpg",
+      "images/notes/inr_50.jpg",
+      "images/notes/inr_100.jpg",
+      "images/notes/inr_200.jpg",
+      "images/notes/inr_500.jpg"
+    ],
+    "history": "The Indian Rupee has a history spanning over 2,500 years. The modern Rupee was introduced after independence in 1947. The 2016 demonetization of ₹500 and ₹1000 notes was one of the most dramatic currency events in modern history."
+  },
+  "China": {
+    "name": "Chinese Yuan",
+    "code": "CNY",
+    "flag": "images/flags/china.png",
+    "images": [],
+    "history": "The Renminbi (People's Currency) was introduced by the People's Bank of China in 1948. The Yuan is the basic unit of the Renminbi. China's currency has grown in global importance and was added to the IMF's Special Drawing Rights basket in 2016."
+  },
+  "Russia": {
+    "name": "Russian Ruble",
+    "code": "RUB",
+    "flag": "images/flags/russia.png",
+    "images": [],
+    "history": "The Russian Ruble is one of the oldest currencies in the world, in continuous use since the 13th century. It was decimalized in 1704 under Peter the Great. The Ruble has undergone several major reforms and redenominations throughout Russian history."
+  },
+  "Brazil": {
+    "name": "Brazilian Real",
+    "code": "BRL",
+    "flag": "images/flags/brazil.png",
+    "images": [],
+    "history": "The Brazilian Real was introduced in 1994 as part of the Plano Real, an economic stabilization plan that successfully ended Brazil's hyperinflation. The notes feature Brazilian wildlife including the hummingbird, jaguar, and macaw."
+  },
+  "Australia": {
+    "name": "Australian Dollar",
+    "code": "AUD",
+    "flag": "images/flags/australia.png",
+    "images": [],
+    "history": "Australia introduced its dollar in 1966, replacing the Australian Pound. In 1988, Australia became the first country to issue polymer banknotes, a technology now used by over 20 countries worldwide for its durability and security features."
+  },
+  "Canada": {
+    "name": "Canadian Dollar",
+    "code": "CAD",
+    "flag": "images/flags/canada.png",
+    "images": [],
+    "history": "The Canadian Dollar was introduced in 1858. Canada switched to polymer banknotes in 2013. The iconic $20 note features Queen Elizabeth II, while other notes celebrate Canadian achievements in science, art, and exploration."
+  },
+  "Switzerland": {
+    "name": "Swiss Franc",
+    "code": "CHF",
+    "flag": "images/flags/switzerland.png",
+    "images": [],
+    "history": "The Swiss Franc has been one of the world's most stable currencies since 1850. Switzerland's neutrality and strong banking sector have made it a global safe-haven currency. Swiss banknotes are widely considered among the most beautiful in the world."
+  },
+  "South Korea": {
+    "name": "South Korean Won",
+    "code": "KRW",
+    "flag": "images/flags/south_korea.png",
+    "images": [],
+    "history": "The South Korean Won was introduced in 1962. The notes feature prominent Korean historical figures including Admiral Yi Sun-sin and scholar Shin Saimdang — the first woman to appear on a Korean banknote."
+  },
+  "Turkey": {
+    "name": "Turkish Lira",
+    "code": "TRY",
+    "flag": "images/flags/turkey.png",
+    "images": [],
+    "history": "The Turkish Lira has a long history dating back to the Ottoman Empire. Turkey redenominated its currency in 2005, removing six zeros from the old Lira. All modern notes feature Mustafa Kemal Atatürk, founder of the Turkish Republic."
+  },
+  "Kuwait": {
+    "name": "Kuwaiti Dinar",
+    "code": "KWD",
+    "flag": "images/flags/kuwait.png",
+    "images": [],
+    "history": "The Kuwaiti Dinar is the world's highest-valued currency unit, introduced in 1961 when Kuwait gained independence from Britain. Its high value reflects Kuwait's immense oil wealth and small population."
+  },
+  "Bahrain": {
+    "name": "Bahraini Dinar",
+    "code": "BHD",
+    "flag": "images/flags/bahrain.png",
+    "images": [],
+    "history": "The Bahraini Dinar was introduced in 1965 and is pegged to the US Dollar at 0.376 BHD, making it the second highest-valued currency in the world. Bahrain's notes feature the Al-Fateh Grand Mosque and other national landmarks."
+  },
+  "Pakistan": {
+    "name": "Pakistani Rupee",
+    "code": "PKR",
+    "flag": "images/flags/pakistan.png",
+    "images": [],
+    "history": "The Pakistani Rupee was introduced in 1948, shortly after Pakistan's independence. All Pakistani banknotes feature Muhammad Ali Jinnah, the founder of Pakistan, on the obverse, and notable Pakistani landmarks on the reverse."
+  }
+}
