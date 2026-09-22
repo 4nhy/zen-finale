@@ -114,7 +114,7 @@ export function ProblemsSection() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Teams outrunning their tooling deserve software shaped around how they actually work. Most stacks force it the other way.
+              Stop piecing together software that wasn't built for the way your business operates. Build around the way you actually work.
             </h2>
 
             <p
@@ -125,7 +125,7 @@ export function ProblemsSection() {
                 color: "var(--mono-black-100)",
               }}
             >
-              That mismatch costs more than time. It costs the leverage of finally running the exact system your operation was built for.
+              Custom solutions, affordable alternatives, and every tool connected through one account, one platform, and one experience.
             </p>
 
             <div

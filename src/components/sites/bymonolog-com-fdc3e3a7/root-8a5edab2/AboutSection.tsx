@@ -30,7 +30,7 @@ const TEAM = [
   {
     initial: "D",
     name: "Dhvani",
-    role: "Co-founder · backend & security",
+    role: "Backend & security",
     focus:
       "Builds the systems behind every product while keeping security at the forefront, ensuring every layer is designed to withstand threat.",
     github: "https://github.com/dhvqn1",
