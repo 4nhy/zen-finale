@@ -24,7 +24,7 @@ const TEAM = [
     name: "Anthony",
     role: "Founder · fullstack",
     focus:
-      "Runs the trading platform build. Product, infrastructure, execution. First point of contact.",
+      "Brings ideas into execution by leading the team, shaping project direction, and working across both the backend and frontend.",
     github: "https://github.com/4nhy",
   },
   {
@@ -32,7 +32,7 @@ const TEAM = [
     name: "Dhvani",
     role: "Co-founder · backend & security",
     focus:
-      "Backend and security. Built the exoplanet classifier. Built the pentesting agent. ML, agents, automation.",
+      "Builds the systems behind every product while keeping security at the forefront, ensuring every layer is designed to withstand threat.",
     github: "https://github.com/dhvqn1",
   },
   {
@@ -40,7 +40,7 @@ const TEAM = [
     name: "Swara",
     role: "Frontend & design",
     focus:
-      "Frontend, interaction, visual design. Owns the design system. Owns every screen you touch.",
+      "Shapes the frontend of every product, turning user needs into intuitive, polished experiences designed around how people actually use them.",
     github: "https://github.com/swara4747",
   },
 ];
@@ -57,8 +57,8 @@ const PRINCIPLES = [
 const STATS = [
   { n: "4", l: "Products shipped." },
   { n: "5", l: "Disciplines. One team." },
-  { n: "< 1 day", l: "Reply time." },
-  { n: "4 to 10 wks", l: "Build window." },
+  { n: "24 hours", l: "Reply time." },
+  { n: "14 to 40 days", l: "Build window." },
 ];
 
 export function AboutSection() {
@@ -275,21 +275,22 @@ export function AboutSection() {
             {STATS.map((s) => (
               <div
                 key={s.l}
-                className="px-6 py-8 text-center"
+                className="px-4 py-8 flex flex-col items-center justify-center gap-2 text-center min-h-[8rem]"
                 style={{ background: "var(--mono-card-bg)" }}
               >
                 <div
-                  className="tracking-tight tabular-nums"
+                  className="tracking-tight tabular-nums whitespace-nowrap"
                   style={{
-                    fontSize: "clamp(1.75rem, 2.5vw, 2.25rem)",
+                    fontSize: "clamp(1.25rem, 2vw, 1.875rem)",
                     fontWeight: 700,
+                    lineHeight: 1.1,
                     color: "var(--mono-beige-100)",
                   }}
                 >
                   {s.n}
                 </div>
                 <div
-                  className="text-sm mt-2 leading-snug"
+                  className="text-sm leading-snug"
                   style={{ color: "var(--mono-black-50)" }}
                 >
                   {s.l}

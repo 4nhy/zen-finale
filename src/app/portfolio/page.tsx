@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ArrowUpRight, Construction } from "lucide-react";
 import { SiteNav } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteNav";
 import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteFooter";
+import ThreadMerge from "@/components/sites/bymonolog-com-fdc3e3a7/shared/ThreadMerge";
 import {
   websites,
   websiteTiers,
@@ -27,8 +28,36 @@ export default function PortfolioPage() {
     >
       <SiteNav />
 
-      <section className="pt-32 pb-16">
-        <div className="mono-container flex flex-col items-center gap-10 text-center">
+      <section className="relative isolate overflow-hidden pt-32 pb-16">
+        <style>{`
+          @keyframes mono-portfolio-in {
+            from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+            to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+          }
+          .mono-portfolio-intro {
+            animation: mono-portfolio-in 1s var(--ease-expo-out, cubic-bezier(0.16,1,0.3,1)) both;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .mono-portfolio-intro { animation: none; }
+          }
+        `}</style>
+        {/* Animated ThreadMerge backdrop — threads spread on the left funnel
+            into one merged trunk at centre; orange packets flow along random
+            threads and space themselves out on the shared line. Masked to
+            fade out before the catalog so it stays ambient behind the header. */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+          }}
+        >
+          <ThreadMerge className="w-full h-full" />
+        </div>
+
+        <div className="mono-portfolio-intro relative z-10 mono-container flex flex-col items-center gap-10 text-center">
           <span className="mono-eyebrow">Portfolio</span>
           <h1
             className="max-w-[24ch]"
