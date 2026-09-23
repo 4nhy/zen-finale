@@ -181,12 +181,12 @@ const ThreadMerge: React.FC<ThreadMergeProps> = ({
         ctx!.fillStyle = `rgba(${pr},${pg},${pb},${alpha})`;
         const w = 9, h = 5, r = 2;
         ctx!.beginPath();
-        if (ctx!.roundRect) ctx!.roundRect(-w / 2, -h / 2, w, h, r);
+        if (typeof ctx!.roundRect === "function") ctx!.roundRect(-w / 2, -h / 2, w, h, r);
         else ctx!.rect(-w / 2, -h / 2, w, h);
         ctx!.fill();
         ctx!.fillStyle = `rgba(255,232,205,${0.95 * alpha})`;
         ctx!.beginPath();
-        if (ctx!.roundRect) ctx!.roundRect(-w / 2, -h / 2, w * 0.4, h, r);
+        if (typeof ctx!.roundRect === "function") ctx!.roundRect(-w / 2, -h / 2, w * 0.4, h, r);
         else ctx!.rect(-w / 2, -h / 2, w * 0.4, h);
         ctx!.fill();
         ctx!.restore();
