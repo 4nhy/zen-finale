@@ -49,12 +49,21 @@ export const softwareTiers = [
 ] as const;
 
 export const websites: WebsiteItem[] = [
+  // Tier 1 — Static
   { id: "rootwell-dental", tier: 1, title: "Rootwell Dental", tag: "Local business · Dental", blurb: "An unhurried dental practice's brochure. Four pages, hand-tuned CSS, no runtime. Trust before spectacle.", slug: "rootwell-dental", accent: "#3a5c4b" },
   { id: "house-of-oak", tier: 1, title: "House of Oak", tag: "Retail · Craft furniture", blurb: "A furniture maker's site with collection, craft, journal and visit pages. Static tier: no JS motion, just a strong grid.", slug: "house-of-oak", accent: "#8a6a3a" },
+  // Tier 2 — Refined
   { id: "aether-studio", tier: 2, title: "Aether Studio", tag: "Design studio · Brutalist", blurb: "A brutalist design studio brand covering work, services and contact. The feel upgrade lives in type discipline, not assets.", slug: "aether-studio", accent: "#c9c1b2" },
   { id: "bookstore", tier: 2, title: "Foundry Books", tag: "Retail · Bookstore", blurb: "An independent bookstore with catalog, book detail, archive and editorial journal. A refined typographic system across many templates.", slug: "bookstore", accent: "#5a3a2a" },
-  { id: "hyperblast-optics", tier: 3, title: "Hyperblast Optics", tag: "E-commerce · Eyewear", blurb: "A high-contrast eyewear brand with a product archive. Photography drives every section. The asset budget is the tier.", slug: "hyperblast-optics", accent: "#e0544d" },
+  { id: "hyperblast-optics", tier: 2, title: "Hyperblast Optics", tag: "E-commerce · Eyewear", blurb: "A high-contrast eyewear brand with a product archive. Photography drives every section against a bold, confident grid.", slug: "hyperblast-optics", accent: "#e0544d" },
+  // Tier 3 — Editorial
   { id: "staylux", tier: 3, title: "StayLux Estates", tag: "Hospitality · Luxury stays", blurb: "A luxury short-let brand covering estates, amenities, collections and concierge. Full-bleed imagery, art-directed and graded.", slug: "staylux", accent: "#a08560" },
+  { id: "job-board", tier: 3, title: "The Roster", tag: "Careers · Job board", blurb: "A Swiss-typographic job and internship board. Black and white with one signal-red accent, a strict grid and heavy GSAP choreography, photography graded to high-contrast grayscale.", slug: "job-board", accent: "#d8352a" },
+  { id: "recipe-hub", tier: 3, title: "Recipe Hub", tag: "Editorial · Recipes", blurb: "A rustic recipe archive shot like a dark-wood farmhouse tablescape. Low, warm, directional light on near-black grounds, oatmeal reading surfaces and a fired-clay accent.", slug: "recipe-hub", accent: "#b2542c" },
+  // Tier 4 — Choreographed
+  { id: "angel-wire", tier: 4, title: "Angel Wire", tag: "E-commerce · Jewelry", blurb: "A dark, gothic one-of-one jewelry label. Near-black grounds, cool sterling-silver metallics and a scroll-scrubbed wordmark across an archive and collections.", slug: "angel-wire", accent: "#b9bcc4" },
+  { id: "audio-drift", tier: 4, title: "Drift", tag: "Product · Audio", blurb: "A premium wireless-headphone launch. A WebGL descent dissipates the hero atmosphere on scroll to reveal the product, with the background tracking each colorway in focus.", slug: "audio-drift", accent: "#7f8da3" },
+  { id: "verde-noir", tier: 4, title: "Verde Noir", tag: "E-commerce · Plants", blurb: "A dark-mode premium houseplant shop. Deep green panels, a gold accent and a direct browse-to-checkout flow built for considered interiors.", slug: "verde-noir", accent: "#c9a227" },
 ];
 
 // tier 0 for the four real open-source projects (shown above the demo ladder).

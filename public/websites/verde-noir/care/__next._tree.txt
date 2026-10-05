@@ -1,0 +1,12 @@
+:HL["/websites/verde-noir/_next/static/chunks/3h6y3vle-ik1p.css","style"]
+:HL["/websites/verde-noir/_next/static/media/Erode_Bold-s.p.2luw02f7-_-h6.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Erode_Medium-s.p.2-snl7n88gfw1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Erode_Regular-s.p.3swkq4f1d32i6.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Erode_SemiBold-s.p.0f8l818hon0q5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_Black-s.p.2-rneh5bd0-6z.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_Bold-s.p.0dcxxlihrnei_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_ExtraBold-s.p.26h0o2uwm_zbb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_Medium-s.p.3l_u-a-fiviai.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_Regular-s.p.2-8jtw7dj7qzq.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/websites/verde-noir/_next/static/media/Switzer_SemiBold-s.p.394xklrezc08f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"care","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"ypK2bu21CJ-V9eFN8BU8D"}
