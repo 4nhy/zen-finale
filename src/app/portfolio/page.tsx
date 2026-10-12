@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { use, useState } from "react";
 import { ArrowUpRight, Construction } from "lucide-react";
 import { SiteNav } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteNav";
 import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteFooter";
@@ -18,8 +18,16 @@ import {
 
 type Kind = "websites" | "software";
 
-export default function PortfolioPage() {
-  const [kind, setKind] = useState<Kind>("websites");
+export default function PortfolioPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ kind?: string | string[] }>;
+}) {
+  // /portfolio?kind=software (linked from /services) opens on the Software tab.
+  const { kind: initialKind } = use(searchParams);
+  const [kind, setKind] = useState<Kind>(
+    initialKind === "software" ? "software" : "websites"
+  );
 
   return (
     <main

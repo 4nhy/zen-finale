@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRightIcon } from "@/components/sites/bymonolog-com-fdc3e3a7/shared/icons";
 import { useReveal } from "@/components/sites/bymonolog-com-fdc3e3a7/shared/useReveal";
 
@@ -58,12 +59,12 @@ export function CtaSection() {
             &nbsp;needs
           </h2>
           <div className="flex flex-wrap items-center gap-6">
-            <a
-              href="mailto:hello@zenconsulting.dev"
+            <Link
+              href="/services"
               className="inline-flex items-center gap-3 rounded-full bg-[color:var(--mono-beige-100)] px-6 py-3 text-[color:var(--mono-black-400)] font-semibold hover:bg-[color:var(--mono-beige-400)] transition-colors"
             >
-              Book a scoping call <ArrowRightIcon className="h-4 w-4" />
-            </a>
+              Explore our services <ArrowRightIcon className="h-4 w-4" />
+            </Link>
             <p
               className="mono-eyebrow max-w-[42ch]"
               style={{ color: "var(--mono-beige-100)", opacity: 0.8 }}

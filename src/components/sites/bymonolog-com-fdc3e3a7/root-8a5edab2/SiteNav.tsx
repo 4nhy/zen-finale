@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "About", href: "/#about" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Affiliate", href: "/partners" },
+  { label: "Services", href: "/services" },
 ];
 
 export function SiteNav() {
@@ -54,11 +54,13 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
+        {/* Desktop shows the links above; phones hide them, so give phones a
+            way into Services instead of an empty header. */}
         <Link
-          href="/contact"
-          className="rounded-full border border-[color:var(--mono-beige-100)]/70 px-4 py-2 text-[12px] tracking-tight hover:bg-[color:var(--mono-beige-100)] hover:text-[color:var(--mono-black-400)] transition-colors"
+          href="/services"
+          className="md:hidden rounded-full border border-[color:var(--mono-beige-100)]/70 px-4 py-2 text-[12px] tracking-tight hover:bg-[color:var(--mono-beige-100)] hover:text-[color:var(--mono-black-400)] transition-colors"
         >
-          Book a project
+          Services
         </Link>
       </div>
     </nav>
