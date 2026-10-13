@@ -202,10 +202,14 @@ function PortfolioChrome({
       <div className="mono-container flex items-center gap-4 py-3">
         {/* Left · back link */}
         <Link
-          href="/portfolio"
+          // Portfolio opens on Software, so send website visitors back to their tab.
+          href={kindLabel === "Website" ? "/portfolio?kind=websites" : "/portfolio"}
           className="inline-flex items-center gap-2 text-[13px] shrink-0 opacity-80 hover:opacity-100 transition-opacity"
         >
-          <ArrowLeft className="w-4 h-4" /> Back to portfolio
+          <ArrowLeft className="w-4 h-4" />
+          <span>
+            Back<span className="hidden sm:inline"> to portfolio</span>
+          </span>
         </Link>
 
         {/* Center · kind · title · tag */}
@@ -249,18 +253,27 @@ function PortfolioChrome({
           </span>
         </div>
 
-        {/* Right · open-in-new-tab + start-a-project */}
+        {/* Right · open-in-new-tab + matching services tab + start-a-project */}
         <div className="ml-auto flex items-center gap-3 shrink-0">
           {liveHref && (
             <a
               href={liveHref}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Open in new tab"
               className="inline-flex items-center gap-1.5 text-[13px] opacity-80 hover:opacity-100 transition-opacity"
             >
-              Open in new tab <ExternalLink className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Open in new tab</span> <ExternalLink className="w-3.5 h-3.5" />
             </a>
           )}
+          <Link
+            href={kindLabel === "Website" ? "/services?kind=websites" : "/services"}
+            className="rounded-full border px-4 py-2 text-[12px] font-semibold transition-colors hover:bg-white/10"
+            style={{ borderColor: "var(--mono-black-200)" }}
+          >
+            {kindLabel === "Website" ? "Website" : "Software"}
+            <span className="hidden sm:inline"> services</span>
+          </Link>
           <Link
             href="/contact"
             className="rounded-full px-4 py-2 text-[12px] font-semibold hover:opacity-90 transition-opacity"

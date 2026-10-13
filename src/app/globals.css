@@ -169,7 +169,11 @@ html.lenis, html.lenis body {
 /* Auto-hide scrollbar: thumb is transparent by default, fades in while
    the user is actively scrolling (ScrollbarAutoHide toggles data-scrolling
    on <html>), then fades out ~1s after idle. */
-* { scrollbar-width: thin; scrollbar-color: transparent transparent; transition: scrollbar-color 300ms ease; }
+/* In @layer base so Tailwind's transition-* utilities can override it;
+   unlayered, this `transition` beat every utility on the site. */
+@layer base {
+  * { scrollbar-width: thin; scrollbar-color: transparent transparent; transition: scrollbar-color 300ms ease; }
+}
 html[data-scrolling="true"] * { scrollbar-color: rgba(128,128,128,0.35) transparent; }
 
 *::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }

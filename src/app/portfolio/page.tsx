@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { use, useState } from "react";
-import { ArrowUpRight, Construction } from "lucide-react";
+import { use } from "react";
+import { ArrowUpRight, Construction, ShieldCheck } from "lucide-react";
 import { SiteNav } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteNav";
 import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteFooter";
 import ThreadMerge from "@/components/sites/bymonolog-com-fdc3e3a7/shared/ThreadMerge";
+import { SwapTabs } from "@/components/ui/swap-tabs";
 import {
   websites,
   websiteTiers,
@@ -16,18 +17,13 @@ import {
   type SoftwareItem,
 } from "@/components/sites/bymonolog-com-fdc3e3a7/shared/portfolioData";
 
-type Kind = "websites" | "software";
-
 export default function PortfolioPage({
   searchParams,
 }: {
   searchParams: Promise<{ kind?: string | string[] }>;
 }) {
-  // /portfolio?kind=software (linked from /services) opens on the Software tab.
-  const { kind: initialKind } = use(searchParams);
-  const [kind, setKind] = useState<Kind>(
-    initialKind === "software" ? "software" : "websites"
-  );
+  // Lands on Software; ?kind=security or ?kind=websites opens another tab.
+  const { kind } = use(searchParams);
 
   return (
     <main
@@ -36,7 +32,7 @@ export default function PortfolioPage({
     >
       <SiteNav />
 
-      <section className="relative isolate overflow-hidden pt-32 pb-16">
+      <section className="relative isolate overflow-hidden pt-32 pb-10">
         <style>{`
           @keyframes mono-portfolio-in {
             from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
@@ -76,7 +72,7 @@ export default function PortfolioPage({
               letterSpacing: "-0.03em",
             }}
           >
-            Two catalogs. One team building and running both.
+            Three catalogs. One team building and running all of them.
           </h1>
           <p
             style={{
@@ -86,46 +82,39 @@ export default function PortfolioPage({
               opacity: 0.75,
             }}
           >
+            Software climbs a scope ladder, from a one-job tool to a full
+            platform we operate. Cybersecurity keeps it all watched, 24/7.
             Websites climb a build-complexity ladder, from a hand-tuned static
-            brochure to a WebGL-scored, fully-composed set-piece. Software
-            climbs a scope ladder, from a one-job tool to a full platform we
-            operate.
+            brochure to a WebGL-scored, fully-composed set-piece.
           </p>
-
-          {/* Toggle */}
-          <div
-            className="inline-flex p-1 rounded-full border"
-            style={{
-              borderColor: "var(--mono-black-200)",
-              background: "rgba(255,255,255,0.03)",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            {(["websites", "software"] as const).map((k) => (
-              <button
-                key={k}
-                type="button"
-                onClick={() => setKind(k)}
-                className="relative px-6 py-2 text-sm font-medium rounded-full transition-colors"
-                style={{
-                  color:
-                    kind === k
-                      ? "var(--mono-black-400)"
-                      : "var(--mono-beige-100)",
-                  background:
-                    kind === k ? "var(--mono-beige-100)" : "transparent",
-                }}
-              >
-                {k === "websites" ? "Websites" : "Software"}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
       <section className="pb-32">
         <div className="mono-container">
-          {kind === "websites" ? <WebsiteCatalog /> : <SoftwareCatalog />}
+          <SwapTabs
+            initial={typeof kind === "string" ? kind : undefined}
+            tabs={[
+              {
+                id: "software",
+                label: "Software",
+                content: <SoftwareCatalog />,
+                action: { href: "/services", label: "See software services" },
+              },
+              {
+                id: "security",
+                label: "Cybersecurity",
+                content: <SecurityCatalog />,
+                action: { href: "/services?kind=security", label: "See cybersecurity services" },
+              },
+              {
+                id: "websites",
+                label: "Websites",
+                content: <WebsiteCatalog />,
+                action: { href: "/services?kind=websites", label: "See website services" },
+              },
+            ]}
+          />
         </div>
       </section>
 
@@ -185,7 +174,6 @@ function WebsiteCard({ w }: { w: WebsiteItem }) {
         fill
         sizes="(max-width: 900px) 100vw, 33vw"
         className="object-cover object-top"
-        unoptimized
       />
       <div
         className="absolute inset-0 opacity-90 group-hover:opacity-70 transition-opacity"
@@ -299,7 +287,6 @@ function SoftwareCard({ demo }: { demo: SoftwareItem }) {
         fill
         sizes="(max-width: 640px) 100vw, 320px"
         className="object-cover object-top"
-        unoptimized
       />
       <div
         className="absolute inset-0 opacity-90 group-hover:opacity-70 transition-opacity"
@@ -337,6 +324,36 @@ function SoftwareCard({ demo }: { demo: SoftwareItem }) {
         </p>
       </div>
     </Link>
+  );
+}
+
+/* ── Cybersecurity ──────────────────────────────────────────────────── */
+
+// ponytail: placeholder until we have enough of each Zen Shield tool to demo.
+function SecurityCatalog() {
+  return (
+    <div
+      className="grid md:grid-cols-[240px_1fr] gap-6 md:gap-10 border-t pt-8"
+      style={{ borderColor: "var(--mono-black-300)" }}
+    >
+      <div className="md:pt-1">
+        <ShieldCheck className="w-10 h-10" style={{ color: "var(--mono-black-100)" }} />
+        <h3 className="text-xl font-semibold mt-3">Zen Shield</h3>
+        <p
+          className="text-sm mt-1.5 leading-relaxed max-w-[15rem]"
+          style={{ color: "var(--mono-beige-100)", opacity: 0.55 }}
+        >
+          Monitoring, scanning and a 24/7 control room for your network.
+        </p>
+        <Link
+          href="/security"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold mt-4 underline-offset-4 hover:underline"
+        >
+          About Zen Shield <ArrowUpRight className="w-4 h-4" />
+        </Link>
+      </div>
+      <UnderConstructionRow reason="Tool demos are on the way." />
+    </div>
   );
 }
 
