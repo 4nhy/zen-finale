@@ -253,7 +253,7 @@ function PortfolioChrome({
           </span>
         </div>
 
-        {/* Right · open-in-new-tab + matching services tab + start-a-project */}
+        {/* Right · open-in-new-tab + start-a-project */}
         <div className="ml-auto flex items-center gap-3 shrink-0">
           {liveHref && (
             <a
@@ -266,14 +266,6 @@ function PortfolioChrome({
               <span className="hidden sm:inline">Open in new tab</span> <ExternalLink className="w-3.5 h-3.5" />
             </a>
           )}
-          <Link
-            href={kindLabel === "Website" ? "/services?kind=websites" : "/services"}
-            className="rounded-full border px-4 py-2 text-[12px] font-semibold transition-colors hover:bg-white/10"
-            style={{ borderColor: "var(--mono-black-200)" }}
-          >
-            {kindLabel === "Website" ? "Website" : "Software"}
-            <span className="hidden sm:inline"> services</span>
-          </Link>
           <Link
             href="/contact"
             className="rounded-full px-4 py-2 text-[12px] font-semibold hover:opacity-90 transition-opacity"
