@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5ed
 import { ContactSection } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Book a project · Zen Consulting",
+  title: "Book a project · Anym",
   description:
     "Tell us what you're trying to fix. We reply within one working day.",
 };

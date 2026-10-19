@@ -14,9 +14,9 @@ const archivoBlack = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: "Zen Consulting — Custom software, built and run by us.",
+  title: "Anym — Custom software, built and run by us.",
   description:
-    "Zen Consulting builds custom software shaped around how your team actually runs — and keeps it running.",
+    "Anym builds custom software shaped around how your team actually runs — and keeps it running.",
 };
 
 export default function RootLayout({

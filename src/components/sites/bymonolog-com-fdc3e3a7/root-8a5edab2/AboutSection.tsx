@@ -35,21 +35,13 @@ const TEAM = [
       "Builds the systems behind every product while keeping security at the forefront, ensuring every layer is designed to withstand threat.",
     github: "https://github.com/dhvqn1",
   },
-  {
-    initial: "S",
-    name: "Swara",
-    role: "Frontend & design",
-    focus:
-      "Shapes the frontend of every product, turning user needs into intuitive, polished experiences designed around how people actually use them.",
-    github: "https://github.com/swara4747",
-  },
 ];
 
 const PRINCIPLES = [
   { t: "Direct.", d: "Talk to the engineers building it. No account managers." },
   { t: "Senior.", d: "A short bench. No junior contractors on your work." },
   { t: "Full-stack.", d: "Interface, backend, data, infrastructure. Same team." },
-  { t: "One workspace.", d: "Every app under one Zen account. Shared auth. One invoice." },
+  { t: "One workspace.", d: "Every app under one Anym account. Shared auth. One invoice." },
   { t: "Kept running.", d: "The engineers who built it maintain it. Fixes, changes, infra. Included." },
   { t: "Priced lower.", d: "Small team. Shared infrastructure. Below per-seat SaaS." },
 ];
@@ -154,7 +146,7 @@ export function AboutSection() {
                 {TEAM.length} on the bench
               </span>
             </div>
-            <ul className="grid gap-4 md:grid-cols-3">
+            <ul className="grid gap-4 md:grid-cols-2">
               {TEAM.map((m) => {
                 const Card = m.github ? "a" : "div";
                 const cardProps = m.github

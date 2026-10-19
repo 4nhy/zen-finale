@@ -39,7 +39,7 @@ export function SiteNav() {
             className="h-6 w-6 shrink-0"
           />
           <span className="font-[700] tracking-[-0.02em] text-[color:var(--mono-beige-100)]">
-            ZEN CONSULTING
+            ANYM
           </span>
         </Link>
         <ul className="hidden md:flex items-center gap-8 text-[13px] text-[color:var(--mono-beige-100)]">

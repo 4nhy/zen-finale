@@ -71,7 +71,7 @@ export function AffiliateSection() {
                 color: "var(--mono-beige-100)",
               }}
             >
-              Zen Consulting Partner Program
+              Anym Partner Program
             </span>
             <h2
               className="mb-6"
@@ -162,7 +162,7 @@ export function AffiliateSection() {
                     <p className="text-sm" style={{ opacity: 0.7 }}>
                       Codes aren&apos;t issued automatically. We review each
                       application and only approve partners we&apos;d be
-                      comfortable having represent Zen.
+                      comfortable having represent Anym.
                     </p>
                   </div>
 
@@ -238,7 +238,7 @@ export function AffiliateSection() {
                             background: e.target.value,
                           })
                         }
-                        placeholder="The kind of clients you work with and how you'd introduce Zen to them."
+                        placeholder="The kind of clients you work with and how you'd introduce Anym to them."
                         className={`${inputClass} resize-none`}
                         style={inputStyle}
                       />

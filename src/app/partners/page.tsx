@@ -4,9 +4,9 @@ import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5ed
 import { AffiliateSection } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/AffiliateSection";
 
 export const metadata: Metadata = {
-  title: "Partner Program · Zen Consulting",
+  title: "Partner Program · Anym",
   description:
-    "Refer clients to Zen and earn 15% of every monthly payment. By invitation, reviewed personally.",
+    "Refer clients to Anym and earn 15% of every monthly payment. By invitation, reviewed personally.",
 };
 
 export default function PartnersPage() {

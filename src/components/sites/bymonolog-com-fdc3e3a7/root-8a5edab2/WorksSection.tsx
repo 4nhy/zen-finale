@@ -215,7 +215,7 @@ export function WorksSection() {
                 lineHeight: 1.05,
               }}
             >
-              Four open-source builds from the Zen team. Live systems, real repos.
+              Four open-source builds from the Anym team. Live systems, real repos.
             </h2>
           </div>
           <a

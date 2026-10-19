@@ -8,7 +8,7 @@ import { ShaderBackground } from "@/components/ui/shader-background";
 import { SwapTabs } from "@/components/ui/swap-tabs";
 
 export const metadata: Metadata = {
-  title: "Services · Zen Consulting",
+  title: "Services · Anym",
   description:
     "Software, cybersecurity and websites from one team: from refreshing what you already run, to replacing the software you rent, to a team that runs it for you. Bundles available. Every job quoted after a scoping call.",
 };
@@ -96,7 +96,7 @@ const softwareBundles: Bundle[] = [
   },
 ];
 
-// Zen Shield plans (Wissen Baum's Packs 1-3, renamed). Detail lives on /security.
+// Anym Shield plans (Wissen Baum's Packs 1-3, renamed). Detail lives on /security.
 const securityLevels: Level[] = [
   {
     name: "Essential",
@@ -454,7 +454,7 @@ export default async function ServicesPage({
                       <div className="flex gap-4">
                         <ShieldCheck className="h-6 w-6 shrink-0 mt-0.5" aria-hidden />
                         <div>
-                          <h3 className="text-lg font-semibold">Zen Shield</h3>
+                          <h3 className="text-lg font-semibold">Anym Shield</h3>
                           <p className="mt-1.5 max-w-[56ch] text-sm leading-relaxed text-[color:var(--mono-beige-100)]/70">
                             Operated 24/7 by an ISO 27001 certified team. Helps
                             you meet CERT-In and DPDP requirements.
@@ -465,7 +465,7 @@ export default async function ServicesPage({
                         href="/security"
                         className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[color:var(--mono-beige-100)] px-5 py-2.5 text-sm font-semibold text-[color:var(--mono-black-400)] transition-colors hover:bg-[color:var(--mono-beige-400)]"
                       >
-                        How Zen Shield works <ArrowUpRight className="w-4 h-4" />
+                        How Anym Shield works <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     </div>
                   </ServiceTab>

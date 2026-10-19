@@ -15,9 +15,9 @@ import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5ed
 import { ShaderBackground } from "@/components/ui/shader-background";
 
 export const metadata: Metadata = {
-  title: "Zen Shield · Zen Consulting",
+  title: "Anym Shield · Anym",
   description:
-    "Zen Shield: the cyber security Indian businesses are now required to have, run for you 24/7 by an ISO 27001 certified team. Helps you meet CERT-In and DPDP requirements.",
+    "Anym Shield: the cyber security Indian businesses are now required to have, run for you 24/7 by an ISO 27001 certified team. Helps you meet CERT-In and DPDP requirements.",
 };
 
 /* Say "helps you meet", never "makes you compliant". */
@@ -102,7 +102,7 @@ const faqs = [
   },
   {
     q: "Does this make us compliant?",
-    a: "No single product can. Zen Shield gives you the monitoring and incident response that CERT-In and the DPDP Act expect, and we walk you through the rest.",
+    a: "No single product can. Anym Shield gives you the monitoring and incident response that CERT-In and the DPDP Act expect, and we walk you through the rest.",
   },
   {
     q: "Who handles our data?",
@@ -125,11 +125,11 @@ function OperatedBy({ align = "center" }: { align?: "center" | "left" }) {
         <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden />
       </summary>
       <p className="mt-4 text-sm leading-relaxed text-[color:var(--mono-beige-100)]/70">
-        Zen Shield is run with our strategic partner, Wissen Baum Engineering
+        Anym Shield is run with our strategic partner, Wissen Baum Engineering
         Solutions, an engineering and IT security firm certified to ISO
         27001:2022 and ISO 9001:2015, with offices in Pune and Delhi, Wolfsburg
         in Germany, and Troy in the USA. Their analysts watch your network
-        around the clock. Zen is your single point of contact, from the first
+        around the clock. Anym is your single point of contact, from the first
         call to every monthly report.
       </p>
     </details>
@@ -185,7 +185,7 @@ export default function SecurityPage() {
         </div>
 
         <div className="mono-security-intro relative z-10 mono-container flex flex-col items-center gap-10 text-center">
-          <span className="mono-eyebrow">Zen Shield</span>
+          <span className="mono-eyebrow">Anym Shield</span>
           <h1
             className="max-w-[20ch]"
             style={{ fontSize: "var(--font-size-h2)", fontWeight: 700, lineHeight: 1.02, letterSpacing: "-0.03em" }}
@@ -240,7 +240,7 @@ export default function SecurityPage() {
             ))}
           </div>
           <p className="mt-6 text-xs text-[color:var(--mono-beige-100)]/45">
-            Zen Shield helps you meet these requirements. It is not legal advice.
+            Anym Shield helps you meet these requirements. It is not legal advice.
           </p>
         </div>
       </section>
@@ -366,7 +366,7 @@ export default function SecurityPage() {
           <SectionHead
             eyebrow="Who it's for"
             title="Many devices, no security team."
-            body="If you run several floors or sites, or dozens of computers, and nobody's job is security, Zen Shield is built for you."
+            body="If you run several floors or sites, or dozens of computers, and nobody's job is security, Anym Shield is built for you."
           />
           <ul className="flex flex-wrap gap-2">
             {industries.map((i) => (
@@ -423,7 +423,7 @@ export default function SecurityPage() {
             style={{ borderColor: "var(--mono-black-300)", background: "rgba(255,255,255,0.02)" }}
           >
             <div>
-              <span className="mono-eyebrow">Zen Shield</span>
+              <span className="mono-eyebrow">Anym Shield</span>
               <h2
                 className="mt-4 max-w-[18ch]"
                 style={{

@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2
 import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Terms of Service · Zen Consulting",
+  title: "Terms of Service · Anym",
 };
 
 export default function TermsPage() {
@@ -29,7 +29,7 @@ export default function TermsPage() {
           <p className="opacity-60 text-sm">Last updated: 2026-09-18</p>
 
           <Section title="1. Overview">
-            These terms cover engagements between Zen Consulting and a client
+            These terms cover engagements between Anym and a client
             organization. Signing a proposal or paying an invoice constitutes
             acceptance of these terms alongside any project-specific
             statement of work.

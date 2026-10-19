@@ -329,7 +329,7 @@ function SoftwareCard({ demo }: { demo: SoftwareItem }) {
 
 /* ── Cybersecurity ──────────────────────────────────────────────────── */
 
-// ponytail: placeholder until we have enough of each Zen Shield tool to demo.
+// ponytail: placeholder until we have enough of each Anym Shield tool to demo.
 function SecurityCatalog() {
   return (
     <div
@@ -338,7 +338,7 @@ function SecurityCatalog() {
     >
       <div className="md:pt-1">
         <ShieldCheck className="w-10 h-10" style={{ color: "var(--mono-black-100)" }} />
-        <h3 className="text-xl font-semibold mt-3">Zen Shield</h3>
+        <h3 className="text-xl font-semibold mt-3">Anym Shield</h3>
         <p
           className="text-sm mt-1.5 leading-relaxed max-w-[15rem]"
           style={{ color: "var(--mono-beige-100)", opacity: 0.55 }}
@@ -349,7 +349,7 @@ function SecurityCatalog() {
           href="/security"
           className="inline-flex items-center gap-1.5 text-sm font-semibold mt-4 underline-offset-4 hover:underline"
         >
-          About Zen Shield <ArrowUpRight className="w-4 h-4" />
+          About Anym Shield <ArrowUpRight className="w-4 h-4" />
         </Link>
       </div>
       <UnderConstructionRow reason="Tool demos are on the way." />

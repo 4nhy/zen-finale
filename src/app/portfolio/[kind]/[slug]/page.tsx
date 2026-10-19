@@ -30,7 +30,7 @@ export async function generateMetadata({
     const w = websites.find((x) => x.slug === slug);
     return {
       title: w
-        ? `${w.title} · Portfolio · Zen Consulting`
+        ? `${w.title} · Portfolio · Anym`
         : "Not found · Portfolio",
       description: w?.blurb,
     };
@@ -38,7 +38,7 @@ export async function generateMetadata({
   const s = software.find((x) => x.id === slug);
   return {
     title: s
-      ? `${s.title} · Portfolio · Zen Consulting`
+      ? `${s.title} · Portfolio · Anym`
       : "Not found · Portfolio",
     description: s?.blurb,
   };

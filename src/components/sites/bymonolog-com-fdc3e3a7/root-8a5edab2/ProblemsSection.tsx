@@ -139,7 +139,7 @@ export function ProblemsSection() {
               />
               <span>
                 <span style={{ color: "var(--mono-black-400)" }}>Anthony</span>
-                {" · "}Founder, Zen Consulting
+                {" · "}Founder, Anym
               </span>
             </div>
           </div>

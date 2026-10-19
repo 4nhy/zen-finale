@@ -82,29 +82,35 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Giant ZEN CONSULTING wordmark, bleeding off the bottom */}
+      {/* ANYM wordmark as a quiet label: widely spaced name, hairlines out to
+          small mono captions. Hairlines sit on the vertical middle of the
+          capitals. Phones drop the lines and show one caption underneath. */}
       <div
         aria-hidden
-        className="mono-rise-big relative z-10 select-none pointer-events-none flex justify-center"
+        className="mono-rise-big relative z-10 select-none pointer-events-none mono-container pb-[clamp(1.5rem,3vw,2.75rem)] text-[color:var(--mono-beige-100)]/45"
       >
-        <svg
-          viewBox="0 0 1000 118"
-          className="w-full block translate-y-[8%]"
-          aria-hidden
-        >
-          <text
-            x="0"
-            y="100"
-            textLength="1000"
-            lengthAdjust="spacingAndGlyphs"
-            fontSize="130"
-            fontWeight="600"
-            fill="currentColor"
-            className="text-[color:var(--mono-beige-100)]/45"
+        <div className="flex items-center justify-center gap-[clamp(1.25rem,2.8vw,2.75rem)]">
+          <div className="relative hidden md:block flex-1 self-stretch">
+            <span className="absolute left-0 bottom-[calc(50%+0.9rem)] font-mono uppercase text-[clamp(0.625rem,0.68vw,0.8rem)] tracking-[0.26em]">
+              Software · Security · Web
+            </span>
+            <span className="absolute inset-x-0 top-1/2 h-px bg-[color:var(--mono-beige-100)]/25" />
+          </div>
+          {/* letter-spacing trails the last letter; equal left padding keeps
+              the glyphs optically centred */}
+          <span
+            className="font-semibold leading-none text-[clamp(3.25rem,7.6vw,8rem)]"
+            style={{ letterSpacing: "0.45em", paddingLeft: "0.45em" }}
           >
-            ZEN CONSULTING
-          </text>
-        </svg>
+            ANYM
+          </span>
+          <div className="relative hidden md:block flex-1 self-stretch">
+            <span className="absolute inset-x-0 top-1/2 h-px bg-[color:var(--mono-beige-100)]/25" />
+          </div>
+        </div>
+        <p className="md:hidden mt-4 text-center font-mono uppercase text-[0.625rem] tracking-[0.26em]">
+          Software · Security · Web
+        </p>
       </div>
     </section>
   );

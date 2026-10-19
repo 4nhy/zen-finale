@@ -172,7 +172,7 @@ export function SiteFooter() {
           style={{ borderColor: "var(--mono-black-200)" }}
         >
           <p className="text-[12px] opacity-70">
-            © 2026 Zen Consulting · Custom software, built and run by us.
+            © 2026 Anym · Custom software, built and run by us.
           </p>
           <a
             href="#top"

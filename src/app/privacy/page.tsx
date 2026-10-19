@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2
 import { SiteFooter } from "@/components/sites/bymonolog-com-fdc3e3a7/root-8a5edab2/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy · Zen Consulting",
+  title: "Privacy Policy · Anym",
 };
 
 export default function PrivacyPage() {
