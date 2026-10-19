@@ -69,8 +69,8 @@ export function CtaSection() {
               className="mono-eyebrow max-w-[42ch]"
               style={{ color: "var(--mono-beige-100)", opacity: 0.8 }}
             >
-              One workspace, run by the same team that shipped it. Built and
-              kept for you, or built and handed off, your call.
+              Your software, workflows and security on one platform, built to
+              a higher standard and kept running by us.
             </p>
           </div>
         </div>

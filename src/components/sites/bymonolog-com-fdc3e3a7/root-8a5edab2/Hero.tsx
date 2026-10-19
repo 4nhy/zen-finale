@@ -77,7 +77,7 @@ export function Hero() {
               color: "var(--mono-beige-100)",
             }}
           >
-            Custom software shaped around how your team actually runs. Built by us. Kept running by us.
+            An atelier for the systems your business runs on.
           </h1>
         </div>
       </div>

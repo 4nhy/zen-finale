@@ -30,7 +30,7 @@ const TEAM = [
   {
     initial: "D",
     name: "Dhvani",
-    role: "Backend & security",
+    role: "Co-founder · backend & security",
     focus:
       "Builds the systems behind every product while keeping security at the forefront, ensuring every layer is designed to withstand threat.",
     github: "https://github.com/dhvqn1",
@@ -39,7 +39,7 @@ const TEAM = [
 
 const PRINCIPLES = [
   { t: "Direct.", d: "Talk to the engineers building it. No account managers." },
-  { t: "Senior.", d: "A short bench. No junior contractors on your work." },
+  { t: "Experienced.", d: "Every build is led by people who have shipped real systems, from machine learning to live trading to security." },
   { t: "Full-stack.", d: "Interface, backend, data, infrastructure. Same team." },
   { t: "One workspace.", d: "Every app under one Anym account. Shared auth. One invoice." },
   { t: "Kept running.", d: "The engineers who built it maintain it. Fixes, changes, infra. Included." },
@@ -80,15 +80,13 @@ export function AboutSection() {
                   lineHeight: 1.02,
                 }}
               >
-                A short bench.
+                Led by founders.
                 <br />
-                Founders on every
-                <br />
-                engagement.
+                Built by a deeper&nbsp;team.
               </h2>
               <p className="opacity-70" style={{ lineHeight: 1.6 }}>
-                Direct, senior, full-stack. Every build shipped and kept
-                running by the same team.
+                You meet the founders. Your system is built and kept running
+                by the whole team behind them.
               </p>
             </div>
 
@@ -138,12 +136,12 @@ export function AboutSection() {
           {/* Team roster */}
           <div className="flex flex-col gap-6">
             <div className="flex items-baseline justify-between gap-4">
-              <h3 className="text-lg font-semibold">The team.</h3>
+              <h3 className="text-lg font-semibold">The Founders.</h3>
               <span
                 className="text-[11px] font-mono uppercase tracking-widest"
                 style={{ color: "var(--mono-black-50)" }}
               >
-                {TEAM.length} on the bench
+                Leading the team
               </span>
             </div>
             <ul className="grid gap-4 md:grid-cols-2">

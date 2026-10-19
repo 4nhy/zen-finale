@@ -114,7 +114,7 @@ export function ProblemsSection() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Stop piecing together software that wasn't built for the way your business operates. Build around the way you actually work.
+              Your software, your workflows and your security, finally in one place.
             </h2>
 
             <p
@@ -125,7 +125,7 @@ export function ProblemsSection() {
                 color: "var(--mono-black-100)",
               }}
             >
-              Custom solutions, affordable alternatives, and every tool connected through one account, one platform, and one experience.
+              We replace the software you rent, connect the tools you keep, automate the work in between and secure all of it. Websites, apps and security on one platform, built to a higher standard and priced below per-seat SaaS.
             </p>
 
             <div
