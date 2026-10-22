@@ -29,17 +29,19 @@ export function SiteNav() {
       style={{ transitionTimingFunction: "var(--ease-primary)" }}
     >
       <div className="mono-container flex items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-2 select-none">
-          {/* Real Zen mark (SVG copied from Zen's public/favicon.svg). */}
+        <Link href="/" aria-label="ANYM" className="flex items-baseline select-none">
+          {/* The Anym mark stands in for the A: the blackletter A, outlined
+              from UnifrakturMaguntia. 0.6875em is Khteka's cap height, so on
+              the shared baseline it is exactly as tall as N, Y and M. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/zen-logo.svg"
+            src="/anym-mark.svg"
             alt=""
             aria-hidden
-            className="h-6 w-6 shrink-0"
+            className="h-[0.6875em] w-auto shrink-0 mr-[0.06em]"
           />
-          <span className="font-[700] tracking-[-0.02em] text-[color:var(--mono-beige-100)]">
-            ANYM
+          <span aria-hidden className="font-[700] tracking-[-0.02em] text-[color:var(--mono-beige-100)]">
+            NYM
           </span>
         </Link>
         <ul className="hidden md:flex items-center gap-8 text-[13px] text-[color:var(--mono-beige-100)]">

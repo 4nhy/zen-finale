@@ -132,7 +132,7 @@ export function SiteFooter() {
                 className="h-2 w-2 rounded-full"
                 style={{ background: "#8dd97a" }}
               />
-              Booking projects for Q3 &lsquo;2026
+              Booking projects
             </span>
           </div>
         </div>

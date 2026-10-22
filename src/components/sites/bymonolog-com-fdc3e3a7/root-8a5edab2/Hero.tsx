@@ -91,7 +91,7 @@ export function Hero() {
       >
         <div className="flex items-center justify-center gap-[clamp(1.25rem,2.8vw,2.75rem)]">
           <div className="relative hidden md:block flex-1 self-stretch">
-            <span className="absolute left-0 bottom-[calc(50%+0.9rem)] font-mono uppercase text-[clamp(0.625rem,0.68vw,0.8rem)] tracking-[0.26em]">
+            <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap bottom-[calc(50%+0.9rem)] pl-[0.26em] font-mono uppercase text-[clamp(0.625rem,0.68vw,0.8rem)] tracking-[0.26em]">
               Software · Security · Web
             </span>
             <span className="absolute inset-x-0 top-1/2 h-px bg-[color:var(--mono-beige-100)]/25" />
@@ -105,6 +105,9 @@ export function Hero() {
             ANYM
           </span>
           <div className="relative hidden md:block flex-1 self-stretch">
+            <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap bottom-[calc(50%+0.9rem)] pl-[0.26em] font-mono uppercase text-[clamp(0.625rem,0.68vw,0.8rem)] tracking-[0.26em]">
+              Atelier
+            </span>
             <span className="absolute inset-x-0 top-1/2 h-px bg-[color:var(--mono-beige-100)]/25" />
           </div>
         </div>
